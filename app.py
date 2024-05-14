@@ -22,6 +22,17 @@ dark = '''
 
 st.markdown(dark, unsafe_allow_html=True)
 
+# Inject custom CSS for black background and white text
+css = """
+<style>
+
+p, span, h1, h2, h3, h4, h5, h6 {
+    color: white;
+}
+</style>
+"""
+st.markdown(css, unsafe_allow_html=True)
+
 # Connect to SQLite database
 conn = sqlite3.connect('movies.db')
 c = conn.cursor()
