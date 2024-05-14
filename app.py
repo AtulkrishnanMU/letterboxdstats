@@ -265,7 +265,11 @@ if username:
             img_circle = mask_to_circle(img_resized)
 
             # Display the circular image
-            st.image(img_circle, width=150, caption="Your Caption Here", align='center')
+            st.markdown(
+                f'<div style="display: flex; justify-content: center;"><img src="{img_circle}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"></div>',
+                unsafe_allow_html=True
+            )
+            
             # Display the bio
             st.markdown(f"**{first_sentence}**")
             st.write(f"Films watched: **{films_watched}**")
