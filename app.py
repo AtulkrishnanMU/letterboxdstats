@@ -193,8 +193,8 @@ if username:
       # Displaying poster images
       if poster_images:
           st.image(poster_images, caption=film_names_with_year, width=150)
-      except:
-          st.write("No favourite films")
+    except:
+        st.write("No favourite films")
 
     all_movies = extract_all_movies(username)
 
