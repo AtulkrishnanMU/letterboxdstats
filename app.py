@@ -60,7 +60,7 @@ if username:
     name, bio, image_url, favorite_films = scrape_profile(username)
 
     # Displaying the details using Streamlit
-    st.title(name)
+    #st.title(name)
     st.markdown("<h1 style='text-align: center;'>{}</h1>".format(name), unsafe_allow_html=True)
     
     if image_url:
@@ -77,7 +77,13 @@ if username:
             img_circle = mask_to_circle(img_resized)
     
             # Display the circular image
-            st.image(img_circle, width=150, caption="Profile", align='center')
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col1:
+                st.write("")
+            with col2:
+                st.image(img_circle, width=150, caption="Profile")
+            with col3:
+                st.write("")
     
         except Exception as e:
             st.error(str(e))
