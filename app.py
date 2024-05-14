@@ -45,6 +45,26 @@ def get_user_stats(username):
 
     return tot_hours, tot_dirs, tot_countries
 
+def get_top_categories():
+    conn = sqlite3.connect('movies.db')
+    c = conn.cursor()
+
+    # Get top 10 genres watched with the number of films
+    c.execute("SELECT genre, COUNT(*) AS num_films FROM movies GROUP BY genre ORDER BY num_films DESC LIMIT 10")
+    top_genres = c.fetchall()
+
+    # Get top 10 countries watched with the number of films
+    c.execute("SELECT country, COUNT(*) AS num_films FROM movies GROUP BY country ORDER BY num_films DESC LIMIT 10")
+    top_countries = c.fetchall()
+
+    # Get top 10 languages watched with the number of films
+    c.execute("SELECT language, COUNT(*) AS num_films FROM movies GROUP BY language ORDER BY num_films DESC LIMIT 10")
+    top_languages = c.fetchall()
+
+    conn.close()
+
+    return top_genres, top_countries, top_languages
+
 def mask_to_circle(img):
     # Create a circular mask
     mask = Image.new("L", img.size, 0)
@@ -261,7 +281,28 @@ if username:
     st.write("Total distinct directors:", tot_dirs)
     st.write("Total distinct countries:", tot_countries)
 
-    
+    top_genres, top_countries, top_languages = get_top_categories()
+
+    # Display top genres bar graph
+    st.subheader("Top 10 Genres Watched:")
+    genres = [genre for genre, _ in top_genres]
+    num_films_genre = [num_films for _, num_films in top_genres]
+    plt.barh(genres, num_films_genre)
+    st.pyplot()
+
+    # Display top countries bar graph
+    st.subheader("Top 10 Countries Watched:")
+    countries = [country for country, _ in top_countries]
+    num_films_country = [num_films for _, num_films in top_countries]
+    plt.barh(countries, num_films_country)
+    st.pyplot()
+
+    # Display top languages bar graph
+    st.subheader("Top 10 Languages Watched:")
+    languages = [language for language, _ in top_languages]
+    num_films_language = [num_films for _, num_films in top_languages]
+    plt.barh(languages, num_films_language)
+    st.pyplot()
 
 
 
