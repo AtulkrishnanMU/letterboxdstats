@@ -52,11 +52,11 @@ if username:
     st.subheader("Favorite Films:")
     poster_images = []
     for film_name, film_link in favorite_films:
-        st.markdown(f"**{film_name}**")
         movie_image_url = get_movie_details(film_link)
         if movie_image_url:
-            poster_images.append(movie_image_url)
+            poster_images.append((movie_image_url, film_name))
     
     # Displaying poster images
     if poster_images:
-        st.image(poster_images, caption=[film_name for film_name, _ in favorite_films], width=150)
+        for movie_image_url, film_name in poster_images:
+            st.image(movie_image_url, caption=film_name, width=150)
