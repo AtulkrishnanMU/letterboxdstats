@@ -12,8 +12,6 @@ from imdb import IMDb
 import matplotlib.pyplot as plt
 import numpy as np
 
-from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
-
 # Connect to SQLite database
 conn = sqlite3.connect('movies.db')
 c = conn.cursor()
@@ -24,17 +22,6 @@ c.execute('''CREATE TABLE IF NOT EXISTS movies
 
 # Commit changes and close connection
 conn.commit()
-
-# Create a PyQt5-styled widget for displaying top genres
-def create_styled_widget(sorted_genre_counts):
-    app = QApplication([])
-    widget = QWidget()
-    layout = QVBoxLayout()
-    for genre, count in sorted_genre_counts:
-        label = QLabel(f"{genre}: {count}")
-        layout.addWidget(label)
-    widget.setLayout(layout)
-    return widget
 
 def get_user_stats(username):
     conn = sqlite3.connect('movies.db')
@@ -331,14 +318,13 @@ if username:
 
     sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10]
     
-    # Streamlit app
-    st.set_page_config(page_title="Top Genres", page_icon=":musical_note:")
+    # Extract genre names and counts for text display
+    top_genres_text = "\n".join([f"{genre}: {count}" for genre, count in sorted_genre_counts])
     
-    st.title("Top 10 Genre Distribution")
-    
-    # Display top genres using PyQt5-styled widget
-    pyqt_widget = create_styled_widget(sorted_genre_counts)
-    st.write(pyqt_widget, unsafe_allow_html=True)
+    # Display top genres with Streamlit
+    st.markdown("## Top 10 Genre Distribution")
+    st.write("Here are the top 10 genres and their respective counts:")
+    st.write(top_genres_text)
     
     '''
     # Display top countries bar graph
