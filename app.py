@@ -319,7 +319,7 @@ if username:
     # Get top categories
     total_hours, distinct_directors, distinct_countries, distinct_languages = get_movie_statistics()
 
-    st.markdown(f"<span style='font-size: 36px;'>{total_hours}</span> **HOURS**   <span style='font-size: 36px;'>{distinct_directors}</span> **DIRECTORS**   <span style='font-size: 36px;'>{distinct_countries}</span> **COUNTRIES**   <span style='font-size: 36px;'>{distinct_languages}</span> **LANGUAGES**", unsafe_allow_html=True)
+    #st.markdown(f"<span style='font-size: 36px;'>{total_hours}</span> **HOURS**   <span style='font-size: 36px;'>{distinct_directors}</span> **DIRECTORS**   <span style='font-size: 36px;'>{distinct_countries}</span> **COUNTRIES**   <span style='font-size: 36px;'>{distinct_languages}</span> **LANGUAGES**", unsafe_allow_html=True)
 
     st.markdown(f"<div style='text-align: center;'><span style='font-size: 36px;'>{total_hours}</span><br><b>HOURS</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_directors}</span><br><b>DIRECTORS</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_countries}</span><br><b>COUNTRIES</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_languages}</span><br><b>LANGUAGES</b></div>", unsafe_allow_html=True)
 
