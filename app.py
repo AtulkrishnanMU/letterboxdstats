@@ -123,6 +123,8 @@ def fetch_movie_details(movie_titles):
 
             progress_bar.progress((i + 1) / total_films)
 
+            i = i+1
+
             c.execute("INSERT INTO movies (title, director, country, language, runtime, genre, cast) VALUES (?, ?, ?, ?, ?, ?, ?)",
                       (title, director, country, language, runtime, genre, cast))
 
