@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import streamlit as st
 
 # Function to scrape the HTML and extract basic details
-def scrape_profile(url):
+def scrape_profile(username):
+    url = f"https://letterboxd.com/{username}/"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     
@@ -14,13 +15,14 @@ def scrape_profile(url):
     
     return name, bio, image_url
 
-# URL of the profile
-profile_url = "https://letterboxd.com/Atul_cinephile/"
+# User input for username
+username = st.text_input("Enter your Letterboxd username:")
 
-# Scraping the profile
-name, bio, image_url = scrape_profile(profile_url)
+if username:
+    # Scraping the profile
+    name, bio, image_url = scrape_profile(username)
 
-# Displaying the details using Streamlit
-st.title(name)
-st.image(image_url, caption='Profile Picture', use_column_width=True)
-st.write(bio)
+    # Displaying the details using Streamlit
+    st.title(name)
+    st.image(image_url, caption='Profile Picture', use_column_width=True)
+    st.write(bio)
