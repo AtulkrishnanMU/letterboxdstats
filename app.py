@@ -183,15 +183,18 @@ if username:
     
     st.subheader("Favorite Films:")
     poster_images = []
-    film_names_with_year = bio.split("Favorites: ")[1].split(".")[0].split(", ")
-    for i, (_, film_link) in enumerate(favorite_films):
-        movie_image_url = get_movie_details(film_link)
-        if movie_image_url:
-            poster_images.append(movie_image_url)
-    
-    # Displaying poster images
-    if poster_images:
-        st.image(poster_images, caption=film_names_with_year, width=150)
+    try:
+      film_names_with_year = bio.split("Favorites: ")[1].split(".")[0].split(", ")
+      for i, (_, film_link) in enumerate(favorite_films):
+          movie_image_url = get_movie_details(film_link)
+          if movie_image_url:
+              poster_images.append(movie_image_url)
+      
+      # Displaying poster images
+      if poster_images:
+          st.image(poster_images, caption=film_names_with_year, width=150)
+      except:
+        st.write("No favourite films")
 
     all_movies = extract_all_movies(username)
 
