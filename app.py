@@ -146,7 +146,9 @@ def fetch_movie_details(username, movie_titles):
             i += 1
         except Exception as e:
             print(f"Error fetching details for '{title}': {e}")
-
+          
+    progress_bar.progress(100)
+  
     conn.close()
 
 # User input for username
