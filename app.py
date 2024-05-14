@@ -77,7 +77,7 @@ if username:
             st.image(img_circle, use_column_width=True, caption="Circular Image")
 
         except Exception as e:
-            st.error("Error loading image. Please check the URL.")
+            st.error(str(e))
     
     st.write(bio)
     
