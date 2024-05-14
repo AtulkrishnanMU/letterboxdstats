@@ -319,13 +319,20 @@ if username:
 
     sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10]
     
-    # Extract genre names and counts for plotting
-    genres = [genre[0] for genre in sorted_genre_counts]
-    counts = [count[1] for count in sorted_genre_counts]
-
-    # Create pie chart using Plotly Express
-    fig_pie = px.pie(values=counts, names=genres, title='Top 10 Genre Distribution')
-    st.plotly_chart(fig_pie)
+    # Create a DataFrame from the sorted genre counts
+    df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
+    
+    # Add some style to the table
+    st.markdown("<style> table td:nth-child(2) { text-align: center; } </style>", unsafe_allow_html=True)
+    st.markdown("<style> table { font-size: 16px; } </style>", unsafe_allow_html=True)
+    
+    # Display top genres in a styled table
+    st.markdown("## Top 10 Genre Distribution")
+    st.write("Here are the top 10 genres and their respective counts:")
+    st.table(df_genre_counts.style.set_table_styles([
+        {'selector': 'th', 'props': [('background-color', '#f7f7f9'), ('color', 'black'), ('font-weight', 'bold')]},
+        {'selector': 'td', 'props': [('background-color', 'white'), ('color', 'black')]}
+    ]))
   
     '''
     # Display top countries bar graph
