@@ -336,6 +336,12 @@ if username:
     # Sort the DataFrame by count
     df_genre_counts = df_genre_counts.sort_values(by='Count', ascending=False)
     
+    # Set the index to 'Genre' after sorting
+    df_genre_counts = df_genre_counts.set_index('Genre')
+    
+    # Specify the order of the index based on the sorted DataFrame
+    df_genre_counts = df_genre_counts.reindex(df_genre_counts.index)
+    
     # Display the bar chart
     st.bar_chart(data=df_genre_counts)
     
