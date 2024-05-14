@@ -49,26 +49,6 @@ def get_user_stats(username):
 
     return tot_hours, tot_dirs, tot_countries
 
-def get_top_categories():
-    conn = sqlite3.connect('movies.db')
-    c = conn.cursor()
-
-    # Get top 10 genres watched with the number of films
-    c.execute("SELECT genre, COUNT(*) AS num_films FROM movies GROUP BY genre ORDER BY num_films DESC LIMIT 10")
-    top_genres = c.fetchall()
-
-    # Get top 10 countries watched with the number of films
-    c.execute("SELECT country, COUNT(*) AS num_films FROM movies GROUP BY country ORDER BY num_films DESC LIMIT 10")
-    top_countries = c.fetchall()
-
-    # Get top 10 languages watched with the number of films
-    c.execute("SELECT language, COUNT(*) AS num_films FROM movies GROUP BY language ORDER BY num_films DESC LIMIT 10")
-    top_languages = c.fetchall()
-
-    conn.close()
-
-    return top_genres, top_countries, top_languages
-
 def mask_to_circle(img):
     # Create a circular mask
     mask = Image.new("L", img.size, 0)
@@ -225,6 +205,31 @@ def count_genre_entries(username):
 
     return genre_counts
 
+def get_movie_statistics():
+  
+    # Fetch total hours watched
+    c.execute("SELECT SUM(runtime) FROM movies")
+    total_minutes = c.fetchone()[0]
+    total_hours = total_minutes / 60
+
+    # Fetch number of distinct directors watched
+    c.execute("SELECT COUNT(DISTINCT director) FROM movies")
+    distinct_directors = c.fetchone()[0]
+
+    # Fetch number of distinct countries watched
+    c.execute("SELECT COUNT(DISTINCT country) FROM movies")
+    distinct_countries = c.fetchone()[0]
+
+    # Fetch number of distinct languages watched
+    c.execute("SELECT COUNT(DISTINCT language) FROM movies")
+    distinct_languages = c.fetchone()[0]
+
+    # Close the connection
+    conn.close()
+
+    # Return the results
+    return total_hours, distinct_directors, distinct_countries, distinct_languages
+
 # User input for username
 username = st.text_input("Enter your Letterboxd username:")
 
@@ -312,7 +317,12 @@ if username:
       #st.script("document.querySelector('#stop_button').disabled = true;")
 
     # Get top categories
-    top_genres, top_countries, top_languages = get_top_categories()
+    total_hours, distinct_directors, distinct_countries, distinct_languages = get_movie_statistics('movies.db')
+
+    st.markdown(f"**Total hours watched:** <span style='font-size: 24px;'>{total_hours}</span>", unsafe_allow_html=True)
+    st.markdown(f"**Number of distinct directors watched:** <span style='font-size: 24px;'>{distinct_directors}</span>", unsafe_allow_html=True)
+    st.markdown(f"**Number of distinct countries watched:** <span style='font-size: 24px;'>{distinct_countries}</span>", unsafe_allow_html=True)
+    st.markdown(f"**Number of distinct languages watched:** <span style='font-size: 24px;'>{distinct_languages}</span>", unsafe_allow_html=True)
 
     # Display top genres bar graph
     genre_counts = count_genre_entries(username)
