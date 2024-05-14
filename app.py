@@ -61,7 +61,7 @@ if username:
 
     # Extracting first sentence, number of films watched, and bio
     first_sentence = bio.split('.')[0] + '.'
-    films_watched = re.search(r'(\d+)', bio).group()
+    films_watched = re.search(r'(\d{1,3}(,\d{3})*)(\.\d+)?', bio).group()
     bio_text = bio.split('Bio: ')[1].strip()
 
     # Displaying the details using Streamlit
