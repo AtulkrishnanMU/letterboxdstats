@@ -149,7 +149,7 @@ def extract_all_movies(username):
     
     return all_movies
 
-def fetch_movie_details(username, movie_titles):
+def fetch_movie_details(username, movie_titles, stop_flag):
     ia = IMDb()
 
     conn = sqlite3.connect('movies.db')
@@ -158,7 +158,7 @@ def fetch_movie_details(username, movie_titles):
     # Check if the username already exists in the table
     c.execute("SELECT title FROM movies WHERE username = ? ORDER BY ROWID DESC LIMIT 1", (username,))
     last_movie_title = c.fetchone()
-    
+
     if last_movie_title:
         last_movie_title = last_movie_title[0]
         try:
@@ -172,6 +172,9 @@ def fetch_movie_details(username, movie_titles):
     i = 0
 
     for title in movie_titles:
+        if stop_flag():
+            st.write(f"{i} movies imported now")
+            break
         try:
             movie = ia.search_movie(title)[0]
             ia.update(movie)
@@ -184,9 +187,6 @@ def fetch_movie_details(username, movie_titles):
             genre = ', '.join(movie.get('genres', []))
             cast = ', '.join([person['name'] for person in movie.get('cast', [])])
 
-            # Assuming you have defined progress_bar elsewhere
-            progress_bar.progress((i + 1) / total_films)
-
             c.execute("INSERT INTO movies (username, year, title, director, country, language, runtime, genre, cast) VALUES (?,?,?,?,?,?,?,?,?)",
                       (username, year, title, director, country, language, runtime, genre, cast))
 
@@ -195,9 +195,7 @@ def fetch_movie_details(username, movie_titles):
             i += 1
         except Exception as e:
             print(f"Error fetching details for '{title}': {e}")
-          
-    progress_bar.progress(100)
-  
+
     conn.close()
 
 def count_genre_entries(username):
@@ -296,8 +294,8 @@ if username:
 
     progress_bar = st.progress(0)
     
-    # Fetch and store movie details
-    fetch_movie_details(username, movie_titles)
+    stop_flag = st.button("Stop for now")
+    fetch_movie_details("username", ["movie1", "movie2", "movie3"], stop_flag)
 
     # Get top categories
     top_genres, top_countries, top_languages = get_top_categories()
