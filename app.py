@@ -82,7 +82,7 @@ if username:
             img_circle = mask_to_circle(img_resized)
 
             # Create a layout with two columns
-            col1, col2 = st.beta_columns([1, 3])
+            col1, col2 = st.columns([1, 3])
 
             # Display the circular image in the first column
             with col1:
