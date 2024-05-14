@@ -320,9 +320,9 @@ if username:
     total_hours, distinct_directors, distinct_countries, distinct_languages = get_movie_statistics()
 
     st.markdown(f"<span style='font-size: 24px;'>{total_hours}</span> **HOURS**", unsafe_allow_html=True)
-    st.markdown(f"**Number of distinct directors watched:** <span style='font-size: 24px;'>{distinct_directors}</span>", unsafe_allow_html=True)
-    st.markdown(f"**Number of distinct countries watched:** <span style='font-size: 24px;'>{distinct_countries}</span>", unsafe_allow_html=True)
-    st.markdown(f"**Number of distinct languages watched:** <span style='font-size: 24px;'>{distinct_languages}</span>", unsafe_allow_html=True)
+    st.markdown(f"<span style='font-size: 24px;'>{distinct_directors}</span> **DIRECTORS**", unsafe_allow_html=True)
+    st.markdown(f"<span style='font-size: 24px;'>{distinct_countries}</span> **COUNTRIES**", unsafe_allow_html=True)
+    st.markdown(f"<span style='font-size: 24px;'>{distinct_languages}</span> **LANGUAGES**", unsafe_allow_html=True)
 
     # Display top genres bar graph
     genre_counts = count_genre_entries(username)
