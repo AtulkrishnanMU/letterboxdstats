@@ -12,6 +12,8 @@ from imdb import IMDb
 import matplotlib.pyplot as plt
 import numpy as np
 
+st.set_theme('night')
+
 # Connect to SQLite database
 conn = sqlite3.connect('movies.db')
 c = conn.cursor()
@@ -173,7 +175,7 @@ def fetch_movie_details(username, movie_titles, stop_flag=0):
 
     for title in movie_titles:
         if stop_flag==1:
-            #st.write(f"{entry_count} movies imported now")
+            #st.write(f"{entry_count} movies imported till now")
             break
         else:
           try:
@@ -268,8 +270,8 @@ if username:
             with col2:
                 st.markdown(f"**{first_sentence}**")
                 st.write(f"Films watched: **{films_watched}**")
-                if bio_text !="":
-                    st.write(f"Bio: {bio_text}")
+                #if bio_text !="":
+                    #st.write(f"Bio: {bio_text}")
             
         except Exception as e:
             st.error(str(e))
