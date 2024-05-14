@@ -61,6 +61,7 @@ if username:
 
     # Displaying the details using Streamlit
     st.title(name)
+    st.markdown("<h1 style='text-align: center;'>{}</h1>".format(name), unsafe_allow_html=True)
     
     if image_url:
         try:
@@ -76,7 +77,7 @@ if username:
             img_circle = mask_to_circle(img_resized)
     
             # Display the circular image
-            st.image(img_circle, width=150, caption="Profile")
+            st.image(img_circle, width=150, caption="Profile", align='center')
     
         except Exception as e:
             st.error(str(e))
