@@ -59,6 +59,11 @@ if username:
     # Scraping the profile
     name, bio, image_url, favorite_films = scrape_profile(username)
 
+    # Extracting first sentence, number of films watched, and bio
+    first_sentence = bio.split('.')[0] + '.'
+    films_watched = re.search(r'(\d+)', bio).group()
+    bio_text = bio.split('Bio: ')[1].strip()
+
     # Displaying the details using Streamlit
     # st.title(name)
     st.markdown("<h1 style='text-align: center;'>{}</h1>".format(name), unsafe_allow_html=True)
@@ -77,7 +82,7 @@ if username:
             img_circle = mask_to_circle(img_resized)
 
             # Create a layout with two columns
-            col1, col2 = st.columns([1, 3])
+            col1, col2 = st.beta_columns([1, 3])
 
             # Display the circular image in the first column
             with col1:
@@ -85,7 +90,9 @@ if username:
 
             # Display the bio in the second column
             with col2:
-                st.write(bio)
+                st.markdown(f"**{first_sentence}**")
+                st.write(f"Films watched: **{films_watched}**")
+                st.write(f"Bio: {bio_text}")
             
         except Exception as e:
             st.error(str(e))
