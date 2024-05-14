@@ -66,16 +66,18 @@ if username:
         try:
             response = requests.get(image_url)
             img = Image.open(BytesIO(response.content))
-
-            # Resize image to a smaller size
-            img.thumbnail((100, 100))
-
-            # Mask the image to a circle
-            img_circle = mask_to_circle(img)
-
+    
+            # Resize the image to desired dimensions
+            new_width = 200  # Adjust the width as needed
+            new_height = 200  # Adjust the height as needed
+            img_resized = img.resize((new_width, new_height))
+    
+            # Mask the resized image to a circle
+            img_circle = mask_to_circle(img_resized)
+    
             # Display the circular image
             st.image(img_circle, use_column_width=True, caption="Circular Image")
-
+    
         except Exception as e:
             st.error(str(e))
     
