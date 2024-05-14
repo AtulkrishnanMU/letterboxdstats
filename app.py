@@ -333,14 +333,9 @@ if username:
     # Create a DataFrame from the sorted genre counts
     df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
 
-    fig, ax = plt.subplots()
-    ax.bar(df_genre_counts['Genre'], df_genre_counts['Count'])
-    plt.xticks(rotation=45, ha='right')
-    plt.xlabel('Genre')
-    plt.ylabel('Count')
-    plt.tight_layout()
-    st.pyplot(fig)
-    
+    # Plot the bar chart using Streamlit's st.bar_chart()
+    st.bar_chart(df_genre_counts.set_index('Genre'))
+        
     # Add some style to the table
     st.markdown("<style> table td:nth-child(2) { text-align: center; } </style>", unsafe_allow_html=True)
     st.markdown("<style> table { font-size: 16px; } </style>", unsafe_allow_html=True)
