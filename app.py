@@ -59,10 +59,7 @@ if username:
     
     # Displaying poster images
     if poster_images:
-        for i, image_url in enumerate(poster_images):
-            st.image(image_url, caption=film_names_with_year[i], width=150)
-            if i < len(poster_images) - 1:
-                st.write("")  # Add empty space between images
+        st.image(poster_images, caption=film_names_with_year, width=150)
 
 
 
