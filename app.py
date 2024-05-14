@@ -172,10 +172,11 @@ def fetch_movie_details(username, movie_titles, stop_flag=0):
     i = 0
 
     for title in movie_titles:
-        if stop_flag:
+        if stop_flag==1:
             st.write(f"{i} movies imported now")
             break
-        try:
+        else:
+          try:
             movie = ia.search_movie(title)[0]
             ia.update(movie)
 
@@ -196,7 +197,7 @@ def fetch_movie_details(username, movie_titles, stop_flag=0):
             conn.commit()
 
             i += 1
-        except Exception as e:
+          except Exception as e:
             print(f"Error fetching details for '{title}': {e}")
 
     conn.close()
@@ -298,7 +299,7 @@ if username:
     progress_bar = st.progress(0)
     
     stop_flag = st.button("Stop for now")
-    fetch_movie_details("username", ["movie1", "movie2", "movie3"], stop_flag)
+    fetch_movie_details(username, movie_titles, stop_flag)
 
     # Get top categories
     top_genres, top_countries, top_languages = get_top_categories()
