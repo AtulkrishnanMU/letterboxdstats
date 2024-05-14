@@ -335,6 +335,8 @@ if username:
     for index, (key, value) in enumerate(sorted_genre_counts, start=1):
         modified_key = f"{index}. {key}"
         modified_genre_counts[modified_key] = value
+
+    print(modified_genre_counts)
     
     # Create a DataFrame from the sorted genre counts
     df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
