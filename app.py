@@ -11,6 +11,7 @@ import sqlite3
 from imdb import IMDb
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 # Connect to SQLite database
 conn = sqlite3.connect('movies.db')
