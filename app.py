@@ -298,11 +298,9 @@ if username:
 
     progress_bar = st.progress(0)
 
-    start_flag = st.button("Start collecting data from Letterboxd")
     stop_flag = st.button("Stop for now")
-    if start_flag:
-      fetch_movie_details(username, movie_titles, stop_flag)
-      st.script("document.querySelector('#stop_button').disabled = false;")
+
+    fetch_movie_details(username, movie_titles, stop_flag)
 
     progress_bar.progress(100)
 
