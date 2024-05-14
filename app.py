@@ -337,7 +337,7 @@ if username:
         modified_genre_counts[modified_key] = value
     
     # Create a DataFrame from the sorted genre counts
-    df_genre_counts = pd.DataFrame(modified_genre_counts, columns=['Genre', 'Count'])
+    df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
     
     # Plot the bar chart using Streamlit's st.bar_chart()
     st.bar_chart(df_genre_counts.set_index('Genre'))
