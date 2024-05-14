@@ -12,16 +12,16 @@ from imdb import IMDb
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Define custom dark mode theme
-custom_dark_theme = {
-    "primaryColor": "#00FF00",  # Button and link color
-    "backgroundColor": "#121212",  # Background color
-    "secondaryBackgroundColor": "#000000",  # Page background color
-    "textColor": "#FFFFFF",  # Text color
+css = """
+<style>
+body {
+    background-color: black;
+    color: white;
 }
+</style>
+"""
 
-# Apply custom dark mode theme
-st.set_theme(custom_dark_theme)
+st.markdown(css, unsafe_allow_html=True)
 
 # Connect to SQLite database
 conn = sqlite3.connect('movies.db')
