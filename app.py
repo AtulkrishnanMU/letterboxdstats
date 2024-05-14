@@ -332,6 +332,8 @@ if username:
     
     # Create a DataFrame from the sorted genre counts
     df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
+
+    st.bar_chart(data=df_genre_counts)
     
     # Add some style to the table
     st.markdown("<style> table td:nth-child(2) { text-align: center; } </style>", unsafe_allow_html=True)
