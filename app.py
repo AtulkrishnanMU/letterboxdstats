@@ -154,8 +154,8 @@ def fetch_movie_details(username, movie_titles):
             ia.update(movie)
 
             director = ', '.join([person['name'] for person in movie.get('directors', [])])
-            country = ', '.join(movie.get('countries', []))
-            language = ', '.join(movie.get('languages', []))
+            country = movie.get('countries', [])[0] if movie.get('countries') else ''
+            language = movie.get('languages', [])[0] if movie.get('languages') else ''
             runtime = movie.get('runtimes', [])[0] if movie.get('runtimes', []) else None
             genre = ', '.join(movie.get('genres', []))
             cast = ', '.join([person['name'] for person in movie.get('cast', [])])
