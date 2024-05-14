@@ -332,6 +332,9 @@ if username:
     
     # Create a DataFrame from the sorted genre counts
     df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
+
+    # Sort the DataFrame by count
+    df_genre_counts = df_genre_counts.sort_values(by='Count', ascending=False)
     
     # Display the bar chart
     st.bar_chart(data=df_genre_counts.set_index('Genre'))
