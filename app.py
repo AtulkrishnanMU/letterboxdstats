@@ -301,7 +301,7 @@ if username:
     stop_flag = st.button("Stop for now")
     fetch_movie_details(username, movie_titles, stop_flag)
 
-    progress_bar = st.progress(100)
+    progress_bar.progress(100)
 
     if stop_flag:
       c.execute("SELECT COUNT(*) FROM movies WHERE username = ?", (username,))
