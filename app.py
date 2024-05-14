@@ -317,7 +317,7 @@ if username:
       #st.script("document.querySelector('#stop_button').disabled = true;")
 
     # Get top categories
-    total_hours, distinct_directors, distinct_countries, distinct_languages = get_movie_statistics('movies.db')
+    total_hours, distinct_directors, distinct_countries, distinct_languages = get_movie_statistics()
 
     st.markdown(f"**Total hours watched:** <span style='font-size: 24px;'>{total_hours}</span>", unsafe_allow_html=True)
     st.markdown(f"**Number of distinct directors watched:** <span style='font-size: 24px;'>{distinct_directors}</span>", unsafe_allow_html=True)
