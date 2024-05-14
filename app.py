@@ -107,6 +107,8 @@ def fetch_movie_details(movie_titles):
     conn = sqlite3.connect('movies.db')
     c = conn.cursor()
 
+    i=0
+
     for title in movie_titles:
         try:
             movie = ia.search_movie(title)[0]
@@ -119,7 +121,7 @@ def fetch_movie_details(movie_titles):
             genre = ', '.join(movie.get('genres', []))
             cast = ', '.join([person['name'] for person in movie.get('cast', [])])
 
-            st.write("Title:", title, "Director:", director, "Country:", country, "Language:", language, "Runtime:", runtime, "Genre:", genre, "Cast:", cast)
+            progress_bar.progress((i + 1) / total_films)
 
             c.execute("INSERT INTO movies (title, director, country, language, runtime, genre, cast) VALUES (?, ?, ?, ?, ?, ?, ?)",
                       (title, director, country, language, runtime, genre, cast))
@@ -140,6 +142,7 @@ if username:
     # Extracting first sentence, number of films watched, and bio
     first_sentence = bio.split('.')[0] + '.'
     films_watched = re.search(r'(\d{1,3}(,\d{3})*)(\.\d+)?', bio).group()
+    total_films = int(films_watched.replace(',', ''))
     try:
         bio_text = bio.split('Bio: ')[1].strip()
     except:
@@ -200,9 +203,13 @@ if username:
 
     # List of movie titles
     movie_titles = all_movies
+
+    progress_bar = st.progress(0)
     
     # Fetch and store movie details
     fetch_movie_details(movie_titles)
+
+    
 
 
 
