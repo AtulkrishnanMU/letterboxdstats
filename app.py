@@ -206,6 +206,19 @@ def count_genre_entries(username):
 
     return genre_counts
 
+def get_top_countries():
+    # Fetch top 9 countries by count
+    c.execute("SELECT country, COUNT(*) as count FROM movies GROUP BY country ORDER BY count DESC LIMIT 9")
+    top_countries = c.fetchall()
+
+    # Close the connection
+    conn.close()
+
+    # Convert the results to a dictionary
+    top_countries_dict = {country: count for country, count in top_countries}
+
+    return top_countries_dict
+
 def get_movie_statistics():
   
     # Fetch total hours watched
@@ -264,15 +277,16 @@ if username:
             # Mask the resized image to a circle
             img_circle = mask_to_circle(img_resized)
 
-            # Display the circular image
-            st.markdown(
-                f'<div style="display: flex; justify-content: center;"><img src="{img}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"></div>',
-                unsafe_allow_html=True
-            )
-            
-            # Display the bio
-            st.markdown(f"**{first_sentence}**")
-            st.write(f"Films watched: **{films_watched}**")
+            # Display the circular image in the first column
+            with col1:
+                st.image(img_circle, width=150)
+
+            # Display the bio in the second column
+            with col2:
+                st.markdown(f"**{first_sentence}**")
+                st.write(f"Films watched: **{films_watched}**")
+                #if bio_text !="":
+                    #st.write(f"Bio: {bio_text}")
             
         except Exception as e:
             st.error(str(e))
@@ -325,22 +339,22 @@ if username:
     
     # Plot the bar chart using Streamlit's st.bar_chart()
     st.bar_chart(df_genre_counts.set_index('Genre'))
-  
-    '''
-    # Display top countries bar graph
-    st.subheader("Top 10 Countries Watched:")
-    countries = [country for country, _ in top_countries]
-    num_films_country = [num_films for _, num_films in top_countries]
-    fig_country = px.bar(x=num_films_country, y=countries, orientation='h', labels={'x':'Number of Films', 'y':'Country'})
-    st.plotly_chart(fig_country)
 
-    # Display top languages bar graph
-    st.subheader("Top 10 Languages Watched:")
-    languages = [language for language, _ in top_languages]
-    num_films_language = [num_films for _, num_films in top_languages]
-    fig_language = px.bar(x=num_films_language, y=languages, orientation='h', labels={'x':'Number of Films', 'y':'Language'})
-    st.plotly_chart(fig_language)
-    '''
+    country_counts = get_top_countries()
+
+    sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:9]
+
+    modified_country_counts = {}
+    for index, (key, value) in enumerate(sorted_country_counts, start=1):
+        modified_key = f"{index}. {key}"
+        modified_country_counts[modified_key] = value
+    
+    # Create a DataFrame from the sorted genre counts
+    df_country_counts = pd.DataFrame(list(modified_country_counts.items()), columns=['Country', 'Count'])
+    #df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
+    
+    # Plot the bar chart using Streamlit's st.bar_chart()
+    st.bar_chart(df_country_counts.set_index('Genre'))
 
 
 
