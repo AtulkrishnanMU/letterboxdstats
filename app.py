@@ -59,7 +59,7 @@ if username:
     
     # Displaying poster images
     if poster_images:
-        st.image(poster_images, caption=film_names_with_year, width=150)
+        st.image(poster_images, caption=film_names_with_year, width=150, use_column_width=True)
 
 
     
