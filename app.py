@@ -312,14 +312,16 @@ if username:
     genres = [genre[0] for genre in sorted_genre_counts]
     counts = [count[1] for count in sorted_genre_counts]
     
-    # Create pie chart
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.pie(counts, labels=genres, autopct='%1.1f%%', startangle=140)
-    ax.set_title('Genre Distribution')
-    ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    # Creating sunburst pie chart
+    fig = go.Figure(go.Sunburst(
+        labels=genres,
+        parents=['Genre Distribution'] * len(genres),
+        values=counts,
+    ))
+    fig.update_layout(title='Genre Distribution')
     
-    # Display the pie chart using Streamlit
-    st.pyplot(fig)
+    # Displaying the sunburst pie chart
+    st.plotly_chart(fig)
 
     # Display top countries bar graph
     st.subheader("Top 10 Countries Watched:")
