@@ -333,19 +333,18 @@ if username:
     # Create a DataFrame from the sorted genre counts
     df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
 
-    # Plot the bar chart using Streamlit's st.bar_chart()
-    st.bar_chart(df_genre_counts.set_index('Genre'))
-        
-    # Add some style to the table
-    st.markdown("<style> table td:nth-child(2) { text-align: center; } </style>", unsafe_allow_html=True)
-    st.markdown("<style> table { font-size: 16px; } </style>", unsafe_allow_html=True)
+    # Set the range for y-axis
+    max_value = df_genre_counts['Count'].max() + 15
     
-    # Display top genres in a styled table without index
-    st.markdown("## GENRES")
-    st.table(df_genre_counts.set_index('Genre').style.set_table_styles([
-        {'selector': 'th', 'props': [('background-color', '#f7f7f9'), ('color', 'black'), ('font-weight', 'bold')]},
-        {'selector': 'td', 'props': [('background-color', 'white'), ('color', 'black')]}
-    ]))
+    # Plot the bar chart using Altair
+    bar_chart = alt.Chart(df_genre_counts).mark_bar().encode(
+        x='Genre',
+        y=alt.Y('Count', scale=alt.Scale(domain=[0, max_value]))
+    ).properties(
+        width=alt.Step(50)
+    )
+    
+    st.altair_chart(bar_chart, use_container_width=True)
   
     '''
     # Display top countries bar graph
