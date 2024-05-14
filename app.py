@@ -69,15 +69,15 @@ if username:
             img = Image.open(BytesIO(response.content))
 
             # Resize the image to desired dimensions
-            new_width = 200  # Adjust the width as needed
-            new_height = 200  # Adjust the height as needed
+            new_width = 100  # Adjust the width as needed
+            new_height = 100  # Adjust the height as needed
             img_resized = img.resize((new_width, new_height))
 
             # Mask the resized image to a circle
             img_circle = mask_to_circle(img_resized)
 
             # Create a layout with two columns
-            col1, col2 = st.beta_columns([1, 3])
+            col1, col2 = st.columns([1, 3])
 
             # Display the circular image in the first column
             with col1:
