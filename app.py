@@ -77,16 +77,8 @@ if username:
             img_circle = mask_to_circle(img_resized)
     
             # Display the circular image
-            col1, col2, col3, col4 = st.columns([1, 3, 1, 1])
-            with col1:
-                st.write("")
-            with col2:
-                st.write("")
-            with col3:
-                st.image(img_circle, width=150, caption="Profile")
-            with col4:
-                st.write("")
-    
+            st.image(img_circle, width=150, caption="Icon")
+            
         except Exception as e:
             st.error(str(e))
     
