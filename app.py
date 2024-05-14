@@ -15,7 +15,7 @@ c = conn.cursor()
 
 # Create table to store movie details
 c.execute('''CREATE TABLE IF NOT EXISTS movies
-             (username CHAR(50), title TEXT, director TEXT, country TEXT, language TEXT, runtime INTEGER, genre TEXT, cast TEXT)''')
+             (username CHAR(50), year INTEGER, title TEXT, director TEXT, country TEXT, language TEXT, runtime INTEGER, genre TEXT, cast TEXT)''')
 
 # Commit changes and close connection
 conn.commit()
@@ -153,6 +153,7 @@ def fetch_movie_details(username, movie_titles):
             movie = ia.search_movie(title)[0]
             ia.update(movie)
 
+            year = movie.get('year', '')
             director = ', '.join([person['name'] for person in movie.get('directors', [])])
             country = movie.get('countries', [])[0] if movie.get('countries') else ''
             language = movie.get('languages', [])[0] if movie.get('languages') else ''
@@ -163,8 +164,8 @@ def fetch_movie_details(username, movie_titles):
             # Assuming you have defined progress_bar elsewhere
             progress_bar.progress((i + 1) / total_films)
 
-            c.execute("INSERT INTO movies (username, title, director, country, language, runtime, genre, cast) VALUES (?,?,?,?,?,?,?,?)",
-                      (username, title, director, country, language, runtime, genre, cast))
+            c.execute("INSERT INTO movies (username, year, title, director, country, language, runtime, genre, cast) VALUES (?,?,?,?,?,?,?,?,?)",
+                      (username, year, title, director, country, language, runtime, genre, cast))
 
             conn.commit()
 
