@@ -266,7 +266,7 @@ if username:
 
             # Display the circular image
             st.markdown(
-                f'<div style="display: flex; justify-content: center;"><img src="{img_circle}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"></div>',
+                f'<div style="display: flex; justify-content: center;"><img src="{img}" style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"></div>',
                 unsafe_allow_html=True
             )
             
