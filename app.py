@@ -89,7 +89,7 @@ if username:
 
             # Display the circular image in the first column
             with col1:
-                st.image(img_circle, width=150, caption="Icon")
+                st.image(img_circle, width=150)
 
             # Display the bio in the second column
             with col2:
