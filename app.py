@@ -297,9 +297,12 @@ if username:
     movie_titles = all_movies
 
     progress_bar = st.progress(0)
-    
+
+    start_flag = st.button("Start collecting data from Letterboxd")
     stop_flag = st.button("Stop for now")
-    fetch_movie_details(username, movie_titles, stop_flag)
+    if start_flag:
+      fetch_movie_details(username, movie_titles, stop_flag)
+      st.script("document.querySelector('#stop_button').disabled = false;")
 
     progress_bar.progress(100)
 
@@ -307,7 +310,7 @@ if username:
       c.execute("SELECT COUNT(*) FROM movies WHERE username = ?", (username,))
       entry_count = c.fetchone()[0]
       st.text(f"{entry_count} movies imported now")
-      stop_flag = None
+      st.script("document.querySelector('#stop_button').disabled = true;")
 
     # Get top categories
     top_genres, top_countries, top_languages = get_top_categories()
@@ -324,7 +327,8 @@ if username:
     # Create pie chart using Plotly Express
     fig_pie = px.pie(values=counts, names=genres, title='Top 10 Genre Distribution')
     st.plotly_chart(fig_pie)
-
+    
+    '''
     # Display top countries bar graph
     st.subheader("Top 10 Countries Watched:")
     countries = [country for country, _ in top_countries]
@@ -338,6 +342,7 @@ if username:
     num_films_language = [num_films for _, num_films in top_languages]
     fig_language = px.bar(x=num_films_language, y=languages, orientation='h', labels={'x':'Number of Films', 'y':'Language'})
     st.plotly_chart(fig_language)
+    '''
 
 
 
