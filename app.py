@@ -5,6 +5,7 @@ import re
 from PIL import Image, ImageDraw
 import requests
 from io import BytesIO
+import plotly.express as px
 
 import sqlite3
 from imdb import IMDb
@@ -283,22 +284,23 @@ if username:
     st.subheader("Top 10 Genres Watched:")
     genres = [genre for genre, _ in top_genres]
     num_films_genre = [num_films for _, num_films in top_genres]
-    plt.barh(genres, num_films_genre)
-    st.pyplot()
+    fig_genre = px.bar(x=num_films_genre, y=genres, orientation='h', labels={'x':'Number of Films', 'y':'Genre'})
+    st.plotly_chart(fig_genre)
 
     # Display top countries bar graph
     st.subheader("Top 10 Countries Watched:")
     countries = [country for country, _ in top_countries]
     num_films_country = [num_films for _, num_films in top_countries]
-    plt.barh(countries, num_films_country)
-    st.pyplot()
+    fig_country = px.bar(x=num_films_country, y=countries, orientation='h', labels={'x':'Number of Films', 'y':'Country'})
+    st.plotly_chart(fig_country)
 
     # Display top languages bar graph
     st.subheader("Top 10 Languages Watched:")
     languages = [language for language, _ in top_languages]
     num_films_language = [num_films for _, num_films in top_languages]
-    plt.barh(languages, num_films_language)
-    st.pyplot()
+    fig_language = px.bar(x=num_films_language, y=languages, orientation='h', labels={'x':'Number of Films', 'y':'Language'})
+    st.plotly_chart(fig_language)
+
 
 
 
