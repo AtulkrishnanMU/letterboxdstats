@@ -200,6 +200,28 @@ def fetch_movie_details(username, movie_titles):
   
     conn.close()
 
+def count_genre_entries(username):
+    conn = sqlite3.connect('movies.db')
+    c = conn.cursor()
+
+    # Define genre names
+    genre_names = ["Action", "Adventure", "Animation", "Biography", "Comedy", "Crime", "Documentary", "Drama",
+                   "Family", "Fantasy", "Film-Noir", "History", "Horror", "Music", "Musical", "Mystery", 
+                   "Romance", "Sci-Fi", "Short", "Sport", "Thriller", "War", "Western"]
+
+    # Initialize a dictionary to store counts for each genre
+    genre_counts = {}
+
+    # Count the number of entries for each genre containing the specified genre name
+    for genre in genre_names:
+        c.execute("SELECT COUNT(*) FROM movies WHERE username = ? AND genre LIKE ?", (username, f"%{genre}%"))
+        count = c.fetchone()[0]
+        genre_counts[genre] = count
+
+    conn.close()
+
+    return genre_counts
+
 # User input for username
 username = st.text_input("Enter your Letterboxd username:")
 
@@ -281,11 +303,23 @@ if username:
     top_genres, top_countries, top_languages = get_top_categories()
 
     # Display top genres bar graph
-    st.subheader("Top 10 Genres Watched:")
-    genres = [genre for genre, _ in top_genres]
-    num_films_genre = [num_films for _, num_films in top_genres]
-    fig_genre = px.bar(x=num_films_genre, y=genres, orientation='h', labels={'x':'Number of Films', 'y':'Genre'})
-    st.plotly_chart(fig_genre)
+    genre_counts = count_genre_entries(username)
+
+    # Sorting genre counts
+    sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)
+    
+    # Extracting genre names and counts for plotting
+    genres = [genre[0] for genre in sorted_genre_counts]
+    counts = [count[1] for count in sorted_genre_counts]
+    
+    # Create pie chart
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.pie(counts, labels=genres, autopct='%1.1f%%', startangle=140)
+    ax.set_title('Genre Distribution')
+    ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    
+    # Display the pie chart using Streamlit
+    st.pyplot(fig)
 
     # Display top countries bar graph
     st.subheader("Top 10 Countries Watched:")
