@@ -274,35 +274,27 @@ if username:
     # Fetch and store movie details
     fetch_movie_details(username, movie_titles)
 
-    tot_hours, tot_dirs, tot_countries = get_user_stats(username)
-    
-    # Display user statistics
-    st.write("Total runtime:", tot_hours)
-    st.write("Total distinct directors:", tot_dirs)
-    st.write("Total distinct countries:", tot_countries)
-
+    # Get top categories
     top_genres, top_countries, top_languages = get_top_categories()
 
     # Display top genres bar graph
     st.subheader("Top 10 Genres Watched:")
-    genres = [genre for genre, _ in top_genres]
-    num_films_genre = [num_films for _, num_films in top_genres]
-    plt.barh(genres, num_films_genre)
-    st.pyplot()
+    genre_names = [genre for genre, _ in top_genres]
+    genre_counts = [num_films for _, num_films in top_genres]
+    st.bar_chart({genre_names[i]: genre_counts[i] for i in range(len(genre_names))})
 
     # Display top countries bar graph
     st.subheader("Top 10 Countries Watched:")
-    countries = [country for country, _ in top_countries]
-    num_films_country = [num_films for _, num_films in top_countries]
-    plt.barh(countries, num_films_country)
-    st.pyplot()
+    country_names = [country for country, _ in top_countries]
+    country_counts = [num_films for _, num_films in top_countries]
+    st.bar_chart({country_names[i]: country_counts[i] for i in range(len(country_names))})
 
     # Display top languages bar graph
     st.subheader("Top 10 Languages Watched:")
-    languages = [language for language, _ in top_languages]
-    num_films_language = [num_films for _, num_films in top_languages]
-    plt.barh(languages, num_films_language)
-    st.pyplot()
+    language_names = [language for language, _ in top_languages]
+    language_counts = [num_films for _, num_films in top_languages]
+    st.bar_chart({language_names[i]: language_counts[i] for i in range(len(language_names))})
+
 
 
 
