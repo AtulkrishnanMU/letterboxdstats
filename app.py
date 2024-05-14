@@ -307,6 +307,7 @@ if username:
       c.execute("SELECT COUNT(*) FROM movies WHERE username = ?", (username,))
       entry_count = c.fetchone()[0]
       st.text(f"{entry_count} movies imported now")
+      stop_flag = None
 
     # Get top categories
     top_genres, top_countries, top_languages = get_top_categories()
