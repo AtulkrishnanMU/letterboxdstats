@@ -337,7 +337,7 @@ if username:
     df_genre_counts = df_genre_counts.sort_values(by='Count', ascending=False)
     
     # Display the bar chart
-    st.bar_chart(data=df_genre_counts.set_index('Genre'))
+    st.bar_chart(data=df_genre_counts)
     
     # Add some style to the table
     st.markdown("<style> table td:nth-child(2) { text-align: center; } </style>", unsafe_allow_html=True)
