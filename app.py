@@ -52,16 +52,14 @@ if username:
     st.subheader("Favorite Films:")
     poster_images = []
     film_names_with_year = bio.split("Favorites: ")[1].split(".")[0].split(", ")
-    
-    for film_name, film_link in favorite_films:
-        st.markdown(f"**{film_name}**")
+    for i, (_, film_link) in enumerate(favorite_films):
         movie_image_url = get_movie_details(film_link)
         if movie_image_url:
             poster_images.append(movie_image_url)
     
     # Displaying poster images
     if poster_images:
-        for film in film_names_with_year:
-            st.image(poster_images, caption=film, width=150)
+        st.image(poster_images, caption=film_names_with_year, width=150)
+
 
     
