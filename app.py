@@ -68,10 +68,7 @@ if username:
             img = Image.open(BytesIO(response.content))
 
             # Resize image to a smaller size
-            img.thumbnail((200, 200))
-
-            # Center-align the image
-            st.image(img, use_column_width=True, caption="Original Image")
+            img.thumbnail((100, 100))
 
             # Mask the image to a circle
             img_circle = mask_to_circle(img)
