@@ -326,6 +326,21 @@ if username:
     st.write("Here are the top 10 genres and their respective counts:")
     st.write(top_genres_text)
     
+    # Apply Streamlit Light theme
+    st.markdown(
+        """
+        <style>
+        [data-testid="stSidebar"][aria-expanded="true"] > div:first-child {
+            background-color: #F0F2F6;
+        }
+        [data-testid="stBlock"][aria-expanded="false"] > div:first-child {
+            background-color: #F0F2F6;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
     '''
     # Display top countries bar graph
     st.subheader("Top 10 Countries Watched:")
