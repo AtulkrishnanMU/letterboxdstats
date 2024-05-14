@@ -6,6 +6,20 @@ from PIL import Image, ImageDraw
 import requests
 from io import BytesIO
 
+import sqlite3
+from imdb import IMDb
+
+# Connect to SQLite database
+conn = sqlite3.connect('movies.db')
+c = conn.cursor()
+
+# Create table to store movie details
+c.execute('''CREATE TABLE IF NOT EXISTS movies
+             (id INTEGER PRIMARY KEY, title TEXT, director TEXT, country TEXT, language TEXT, runtime INTEGER, genre TEXT, cast TEXT)''')
+
+# Commit changes and close connection
+conn.commit()
+
 def mask_to_circle(img):
     # Create a circular mask
     mask = Image.new("L", img.size, 0)
@@ -51,6 +65,70 @@ def get_movie_details(movie_link):
         return image_url
     else:
         return None
+
+def extract_movies(url):
+    film_slugs = []
+    movie_info = []
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    movie_containers = soup.find_all('li', class_='poster-container')
+    #print(movie_containers)
+    
+    # Loop through each movie container
+    for container in movie_containers:
+        # Find the div element with class 'poster' inside the container
+        div_element = container.find('div', class_='poster')
+        # Check if the div_element exists and has the 'data-film-slug' attribute
+        if div_element and 'data-film-slug' in div_element.attrs:
+            # Extract the value of the 'data-film-slug' attribute and append it to the list
+            film_slugs.append(div_element['data-film-slug'])
+
+    # Print the list of film slugs
+    return film_slugs
+
+def extract_all_movies(username):
+    base_url = f"https://letterboxd.com/{username}/films/"
+    all_movies = []
+    page_num = 1
+    while True:
+        url = f"{base_url}page/{page_num}/"
+        #print(url)
+        movies = extract_movies(url)
+        if not movies:
+            break
+        all_movies.extend(movies)
+        page_num += 1
+    
+    return all_movies
+
+def fetch_movie_details(movie_titles):
+    ia = IMDb()
+
+    conn = sqlite3.connect('movies.db')
+    c = conn.cursor()
+
+    for title in movie_titles:
+        try:
+            movie = ia.search_movie(title)[0]
+            ia.update(movie)
+
+            director = ', '.join([person['name'] for person in movie.get('directors', [])])
+            country = ', '.join(movie.get('countries', []))
+            language = ', '.join(movie.get('languages', []))
+            runtime = movie.get('runtimes', [])[0] if movie.get('runtimes', []) else None
+            genre = ', '.join(movie.get('genres', []))
+            cast = ', '.join([person['name'] for person in movie.get('cast', [])])
+
+            st.write("Title:", title, "Director:", director, "Country:", country, "Language:", language, "Runtime:", runtime, "Genre:", genre, "Cast:", cast)
+
+            c.execute("INSERT INTO movies (title, director, country, language, runtime, genre, cast) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                      (title, director, country, language, runtime, genre, cast))
+
+            conn.commit()
+        except Exception as e:
+            print(f"Error fetching details for '{title}': {e}")
+
+    conn.close()
 
 # User input for username
 username = st.text_input("Enter your Letterboxd username:")
@@ -114,6 +192,14 @@ if username:
     # Displaying poster images
     if poster_images:
         st.image(poster_images, caption=film_names_with_year, width=150)
+
+    all_movies = extract_all_movies(username)
+
+    # List of movie titles
+    movie_titles = all_movies
+    
+    # Fetch and store movie details
+    fetch_movie_details(movie_titles)
 
 
 
