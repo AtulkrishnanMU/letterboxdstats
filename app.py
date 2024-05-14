@@ -15,7 +15,7 @@ c = conn.cursor()
 
 # Create table to store movie details
 c.execute('''CREATE TABLE IF NOT EXISTS movies
-             (id INTEGER PRIMARY KEY, title TEXT, director TEXT, country TEXT, language TEXT, runtime INTEGER, genre TEXT, cast TEXT)''')
+             (username CHAR(50), title TEXT, director TEXT, country TEXT, language TEXT, runtime INTEGER, genre TEXT, cast TEXT)''')
 
 # Commit changes and close connection
 conn.commit()
@@ -101,13 +101,27 @@ def extract_all_movies(username):
     
     return all_movies
 
-def fetch_movie_details(movie_titles):
+def fetch_movie_details(username, movie_titles):
     ia = IMDb()
 
     conn = sqlite3.connect('movies.db')
     c = conn.cursor()
 
-    i=0
+    # Check if the username already exists in the table
+    c.execute("SELECT title FROM movies WHERE username = ? ORDER BY ROWID DESC LIMIT 1", (username,))
+    last_movie_title = c.fetchone()
+    
+    if last_movie_title:
+        last_movie_title = last_movie_title[0]
+        try:
+            last_movie_index = movie_titles.index(last_movie_title)
+            movie_titles = movie_titles[last_movie_index + 1:]
+        except ValueError:
+            # If last movie not found in movie_titles, insert all movies
+            pass
+
+    total_films = len(movie_titles)
+    i = 0
 
     for title in movie_titles:
         try:
@@ -121,14 +135,15 @@ def fetch_movie_details(movie_titles):
             genre = ', '.join(movie.get('genres', []))
             cast = ', '.join([person['name'] for person in movie.get('cast', [])])
 
-            progress_bar.progress((i + 1) / total_films)
+            # Assuming you have defined progress_bar elsewhere
+            # progress_bar.progress((i + 1) / total_films)
 
-            i = i+1
-
-            c.execute("INSERT INTO movies (title, director, country, language, runtime, genre, cast) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                      (title, director, country, language, runtime, genre, cast))
+            c.execute("INSERT INTO movies (username, title, director, country, language, runtime, genre, cast) VALUES (?,?,?,?,?,?,?,?)",
+                      (username, title, director, country, language, runtime, genre, cast))
 
             conn.commit()
+
+            i += 1
         except Exception as e:
             print(f"Error fetching details for '{title}': {e}")
 
@@ -209,7 +224,7 @@ if username:
     progress_bar = st.progress(0)
     
     # Fetch and store movie details
-    fetch_movie_details(movie_titles)
+    fetch_movie_details(username, movie_titles)
 
     
 
