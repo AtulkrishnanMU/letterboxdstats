@@ -46,7 +46,10 @@ if username:
 
     # Displaying the details using Streamlit
     st.title(name)
-    st.image(image_url, caption='Profile Picture', use_column_width=True)
+    
+    # Center-aligning the avatar
+    st.image(image_url, caption='Profile Picture', use_column_width='always', output_format='PNG', width=100, height=100, format='PNG')
+    
     st.write(bio)
     
     st.subheader("Favorite Films:")
