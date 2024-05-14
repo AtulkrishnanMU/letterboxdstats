@@ -207,6 +207,10 @@ def count_genre_entries(username):
     return genre_counts
 
 def get_top_countries():
+
+    # Connect to SQLite database
+    conn = sqlite3.connect(db_path)
+    c = conn.cursor()
     # Fetch top 9 countries by count
     c.execute("SELECT country, COUNT(*) as count FROM movies GROUP BY country ORDER BY count DESC LIMIT 9")
     top_countries = c.fetchall()
