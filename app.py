@@ -136,7 +136,7 @@ def fetch_movie_details(username, movie_titles):
             cast = ', '.join([person['name'] for person in movie.get('cast', [])])
 
             # Assuming you have defined progress_bar elsewhere
-            # progress_bar.progress((i + 1) / total_films)
+            progress_bar.progress((i + 1) / total_films)
 
             c.execute("INSERT INTO movies (username, title, director, country, language, runtime, genre, cast) VALUES (?,?,?,?,?,?,?,?)",
                       (username, title, director, country, language, runtime, genre, cast))
