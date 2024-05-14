@@ -12,6 +12,8 @@ from imdb import IMDb
 import matplotlib.pyplot as plt
 import numpy as np
 
+from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QWidget
+
 # Connect to SQLite database
 conn = sqlite3.connect('movies.db')
 c = conn.cursor()
@@ -22,6 +24,17 @@ c.execute('''CREATE TABLE IF NOT EXISTS movies
 
 # Commit changes and close connection
 conn.commit()
+
+# Create a PyQt5-styled widget for displaying top genres
+def create_styled_widget(sorted_genre_counts):
+    app = QApplication([])
+    widget = QWidget()
+    layout = QVBoxLayout()
+    for genre, count in sorted_genre_counts:
+        label = QLabel(f"{genre}: {count}")
+        layout.addWidget(label)
+    widget.setLayout(layout)
+    return widget
 
 def get_user_stats(username):
     conn = sqlite3.connect('movies.db')
@@ -318,13 +331,14 @@ if username:
 
     sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10]
     
-    # Extract genre names and counts for plotting
-    genres = [genre[0] for genre in sorted_genre_counts]
-    counts = [count[1] for count in sorted_genre_counts]
-
-    # Create pie chart using Plotly Express
-    fig_pie = px.pie(values=counts, names=genres, title='Top 10 Genre Distribution')
-    st.plotly_chart(fig_pie)
+    # Streamlit app
+    st.set_page_config(page_title="Top Genres", page_icon=":musical_note:")
+    
+    st.title("Top 10 Genre Distribution")
+    
+    # Display top genres using PyQt5-styled widget
+    pyqt_widget = create_styled_widget(sorted_genre_counts)
+    st.write(pyqt_widget, unsafe_allow_html=True)
     
     '''
     # Display top countries bar graph
