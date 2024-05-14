@@ -305,21 +305,15 @@ if username:
     # Display top genres bar graph
     genre_counts = count_genre_entries(username)
 
-    # Sort the genre counts
     sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)
     
     # Extract genre names and counts for plotting
     genres = [genre[0] for genre in sorted_genre_counts]
     counts = [count[1] for count in sorted_genre_counts]
 
-    st.title('Genre Distribution')
-
-    # Create pie chart
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.pie(counts, labels=genres, autopct='%1.1f%%', startangle=140)
-    ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    ax.set_title('Genre Distribution')
-    st.pyplot(fig)
+    # Create pie chart using Plotly Express
+    fig_pie = px.pie(values=counts, names=genres, title='Genre Distribution')
+    st.plotly_chart(fig_pie)
 
     # Display top countries bar graph
     st.subheader("Top 10 Countries Watched:")
