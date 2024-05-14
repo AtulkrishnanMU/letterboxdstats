@@ -264,19 +264,11 @@ if username:
             # Mask the resized image to a circle
             img_circle = mask_to_circle(img_resized)
 
-            # Create a layout with two columns
-            col1, col2 = st.columns([1, 3])
-
-            # Display the circular image in the first column
-            with col1:
-                st.image(img_circle, width=150)
-
-            # Display the bio in the second column
-            with col2:
-                st.markdown(f"**{first_sentence}**")
-                st.write(f"Films watched: **{films_watched}**")
-                #if bio_text !="":
-                    #st.write(f"Bio: {bio_text}")
+            # Display the circular image
+            st.image(img_circle, width=150, caption="Your Caption Here", align='center')
+            # Display the bio
+            st.markdown(f"**{first_sentence}**")
+            st.write(f"Films watched: **{films_watched}**")
             
         except Exception as e:
             st.error(str(e))
