@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import streamlit as st
+import re
 
 # Function to scrape the HTML and extract basic details including favorite films and their links
 def scrape_profile(username):
@@ -25,6 +26,17 @@ def scrape_profile(username):
     
     return name, bio, image_url, favorite_films
 
+# Function to get movie details from JSON data
+def get_movie_details(movie_link):
+    response = requests.get(movie_link)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    script_tag = soup.find('script', type='application/ld+json')
+    if script_tag:
+        image_url = re.search(r'"image":"(.*?)"', str(script_tag)).group(1)
+        return image_url
+    else:
+        return None
+
 # User input for username
 username = st.text_input("Enter your Letterboxd username:")
 
@@ -39,4 +51,7 @@ if username:
     
     st.subheader("Favorite Films:")
     for film_name, film_link in favorite_films:
-        st.markdown(f"[{film_name}]({film_link})")
+        st.markdown(f"**{film_name}**")
+        movie_image_url = get_movie_details(film_link)
+        if movie_image_url:
+            st.image(movie_image_url, caption=film_name, use_column_width=True)
