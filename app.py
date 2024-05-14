@@ -17,7 +17,7 @@ def scrape_profile(username):
     favorite_films = []
     films_container = soup.find('section', id='favourites')
     if films_container:
-        film_posters = films_container.find_all('div', class_='poster-container')
+        film_posters = films_container.find_all('li', class_='poster-container')
         for poster in film_posters:
             film_name = poster.find('div', class_='film-poster')['data-film-slug']
             film_link = f"https://letterboxd.com/film/{film_name}/"
