@@ -336,7 +336,7 @@ if username:
         modified_key = f"{index}. {key}"
         modified_genre_counts[modified_key] = value
 
-    print(modified_genre_counts)
+    print("modified: ", modified_genre_counts)
     
     # Create a DataFrame from the sorted genre counts
     df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
