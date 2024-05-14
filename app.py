@@ -172,7 +172,7 @@ def fetch_movie_details(username, movie_titles, stop_flag):
     i = 0
 
     for title in movie_titles:
-        if stop_flag():
+        if stop_flag:
             st.write(f"{i} movies imported now")
             break
         try:
