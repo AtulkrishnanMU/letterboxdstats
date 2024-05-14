@@ -69,8 +69,8 @@ if username:
             img = Image.open(BytesIO(response.content))
 
             # Resize the image to desired dimensions
-            new_width = 100  # Adjust the width as needed
-            new_height = 100  # Adjust the height as needed
+            new_width = 200  # Adjust the width as needed
+            new_height = 200  # Adjust the height as needed
             img_resized = img.resize((new_width, new_height))
 
             # Mask the resized image to a circle
@@ -81,7 +81,7 @@ if username:
 
             # Display the circular image in the first column
             with col1:
-                st.image(img_circle, width=150, caption="Icon")
+                st.image(img_circle, width=75, caption="Icon")
 
             # Display the bio in the second column
             with col2:
