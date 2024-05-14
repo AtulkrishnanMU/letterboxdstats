@@ -149,7 +149,7 @@ def extract_all_movies(username):
     
     return all_movies
 
-def fetch_movie_details(username, movie_titles, stop_flag):
+def fetch_movie_details(username, movie_titles, stop_flag=0):
     ia = IMDb()
 
     conn = sqlite3.connect('movies.db')
@@ -186,6 +186,9 @@ def fetch_movie_details(username, movie_titles, stop_flag):
             runtime = movie.get('runtimes', [])[0] if movie.get('runtimes', []) else None
             genre = ', '.join(movie.get('genres', []))
             cast = ', '.join([person['name'] for person in movie.get('cast', [])])
+
+            # Assuming you have defined progress_bar elsewhere
+            progress_bar.progress((i + 1) / total_films)
 
             c.execute("INSERT INTO movies (username, year, title, director, country, language, runtime, genre, cast) VALUES (?,?,?,?,?,?,?,?,?)",
                       (username, year, title, director, country, language, runtime, genre, cast))
