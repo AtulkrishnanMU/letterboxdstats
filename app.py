@@ -6,6 +6,7 @@ from PIL import Image, ImageDraw
 import requests
 from io import BytesIO
 import plotly.express as px
+import altair as alt
 
 import sqlite3
 from imdb import IMDb
