@@ -175,7 +175,7 @@ def fetch_movie_details(username, movie_titles, stop_flag=0):
         if stop_flag==1:
             c.execute("SELECT COUNT(*) FROM movies WHERE username = ?", (username,))
             entry_count = c.fetchone()[0]
-            st.write(f"{entry_count} movies imported now")
+            #st.write(f"{entry_count} movies imported now")
             break
         else:
           try:
@@ -302,6 +302,11 @@ if username:
     
     stop_flag = st.button("Stop for now")
     fetch_movie_details(username, movie_titles, stop_flag)
+
+    progress_bar = st.progress(100)
+
+    if stop_flag:
+      st.text(f"{entry_count} movies imported now")
 
     # Get top categories
     top_genres, top_countries, top_languages = get_top_categories()
