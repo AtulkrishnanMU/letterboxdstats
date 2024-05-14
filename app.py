@@ -12,16 +12,15 @@ from imdb import IMDb
 import matplotlib.pyplot as plt
 import numpy as np
 
-css = """
+dark = '''
 <style>
-body {
+    .stApp {
     background-color: black;
-    color: white;
-}
+    }
 </style>
-"""
+'''
 
-st.markdown(css, unsafe_allow_html=True)
+st.markdown(dark, unsafe_allow_html=True)
 
 # Connect to SQLite database
 conn = sqlite3.connect('movies.db')
