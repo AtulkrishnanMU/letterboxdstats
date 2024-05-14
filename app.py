@@ -3,6 +3,18 @@ from bs4 import BeautifulSoup
 import streamlit as st
 import re
 
+def mask_to_circle(img):
+    # Create a circular mask
+    mask = Image.new("L", img.size, 0)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse((0, 0) + img.size, fill=255)
+
+    # Apply the circular mask to the image
+    result = Image.new("RGBA", img.size, (255, 255, 255, 0))
+    result.paste(img, (0, 0), mask)
+
+    return result
+
 # Function to scrape the HTML and extract basic details including favorite films and their links
 def scrape_profile(username):
     url = f"https://letterboxd.com/{username}/"
