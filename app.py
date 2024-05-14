@@ -333,19 +333,37 @@ if username:
     
     # Create a DataFrame from the sorted genre counts
     df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
-
+    
     # Set the range for y-axis
     max_value = df_genre_counts['Count'].max() + 15
     
     # Plot the bar chart using Altair
     bar_chart = alt.Chart(df_genre_counts).mark_bar().encode(
         x='Genre',
-        y=alt.Y('Count', scale=alt.Scale(domain=[0, max_value]))
+        y='Count',
+        # Adding text mark for count labels
+        text='Count:Q',  # Q means quantitative field
+        # Adjusting text position
+        # You can adjust xOffset and yOffset to change the position of the text
+        # xOffset specifies the horizontal offset from the center of the bar
+        # yOffset specifies the vertical offset from the top of the bar
+        # You might need to adjust these values based on your visualization
+        # You can also use align and baseline properties to align text
+        # For example, align='left' to align the text to the left of the bar
+        # and baseline='middle' to align the text vertically centered
+        # xOffset=0, yOffset=-5,
     ).properties(
         width=alt.Step(50)
     )
     
-    st.altair_chart(bar_chart, use_container_width=True)
+    # Combine the bar chart and text marks
+    # Using `+` operator to layer marks
+    chart_with_labels = bar_chart.mark_text().encode(
+        x='Genre',
+        y='Count',
+    )
+    
+    st.altair_chart(chart_with_labels, use_container_width=True)
   
     '''
     # Display top countries bar graph
