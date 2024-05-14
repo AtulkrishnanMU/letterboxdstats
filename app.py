@@ -338,8 +338,7 @@ if username:
     st.markdown("<style> table { font-size: 16px; } </style>", unsafe_allow_html=True)
     
     # Display top genres in a styled table without index
-    st.markdown("## Top 10 Genre Distribution")
-    st.write("Here are the top 10 genres and their respective counts:")
+    st.markdown("## GENRES")
     st.table(df_genre_counts.set_index('Genre').style.set_table_styles([
         {'selector': 'th', 'props': [('background-color', '#f7f7f9'), ('color', 'black'), ('font-weight', 'bold')]},
         {'selector': 'td', 'props': [('background-color', 'white'), ('color', 'black')]}
