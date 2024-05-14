@@ -2,6 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import streamlit as st
 import re
+from PIL import Image
+import requests
+from io import BytesIO
 
 def mask_to_circle(img):
     # Create a circular mask
