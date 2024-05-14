@@ -323,6 +323,8 @@ if username:
 
     st.markdown(f"<div style='text-align: center;'><span style='font-size: 36px;'>{total_hours}</span><br><b>HOURS</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_directors}</span><br><b>DIRECTORS</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_countries}</span><br><b>COUNTRIES</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_languages}</span><br><b>LANGUAGES</b></div>", unsafe_allow_html=True)
 
+    st.markdown(f"<div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{total_hours}</span><br><b>HOURS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_directors}</span><br><b>DIRECTORS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_countries}</span><br><b>COUNTRIES</b></div><div style='display: inline-block;'><span style='font-size: 36px;'>{distinct_languages}</span><br><b>LANGUAGES</b></div>", unsafe_allow_html=True)
+
     # Display top genres bar graph
     genre_counts = count_genre_entries(username)
 
