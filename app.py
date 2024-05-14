@@ -20,6 +20,31 @@ c.execute('''CREATE TABLE IF NOT EXISTS movies
 # Commit changes and close connection
 conn.commit()
 
+def get_user_stats(username):
+    conn = sqlite3.connect('movies.db')
+    c = conn.cursor()
+
+    # Calculate total runtime in hours for the given username
+    c.execute("SELECT SUM(runtime) FROM movies WHERE username = ?", (username,))
+    total_runtime_minutes = c.fetchone()[0]
+    if total_runtime_minutes:
+        total_runtime_hours = total_runtime_minutes / 60
+        tot_hours = f"{total_runtime_hours:.2f} hours"
+    else:
+        tot_hours = "No movies found for the user"
+
+    # Calculate total number of distinct directors for the given username
+    c.execute("SELECT COUNT(DISTINCT director) FROM movies WHERE username = ?", (username,))
+    tot_dirs = c.fetchone()[0]
+
+    # Calculate total number of distinct countries for the given username
+    c.execute("SELECT COUNT(DISTINCT country) FROM movies WHERE username = ?", (username,))
+    tot_countries = c.fetchone()[0]
+
+    conn.close()
+
+    return tot_hours, tot_dirs, tot_countries
+
 def mask_to_circle(img):
     # Create a circular mask
     mask = Image.new("L", img.size, 0)
@@ -227,6 +252,13 @@ if username:
     
     # Fetch and store movie details
     fetch_movie_details(username, movie_titles)
+
+    tot_hours, tot_dirs, tot_countries = get_user_stats(username)
+    
+    # Display user statistics
+    st.write("Total runtime:", tot_hours)
+    st.write("Total distinct directors:", tot_dirs)
+    st.write("Total distinct countries:", tot_countries)
 
     
 
