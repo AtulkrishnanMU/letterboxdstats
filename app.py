@@ -47,8 +47,25 @@ if username:
     # Displaying the details using Streamlit
     st.title(name)
     
-    # Center-aligning the avatar
-    st.image(image_url, caption='Profile Picture', use_column_width='always', output_format='PNG', width=100, height=100, format='PNG')
+    if image_url:
+        try:
+            response = requests.get(image_url)
+            img = Image.open(BytesIO(response.content))
+
+            # Resize image to a smaller size
+            img.thumbnail((200, 200))
+
+            # Center-align the image
+            st.image(img, use_column_width=True, caption="Original Image")
+
+            # Mask the image to a circle
+            img_circle = mask_to_circle(img)
+
+            # Display the circular image
+            st.image(img_circle, use_column_width=True, caption="Circular Image")
+
+        except Exception as e:
+            st.error("Error loading image. Please check the URL.")
     
     st.write(bio)
     
