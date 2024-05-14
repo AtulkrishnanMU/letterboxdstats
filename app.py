@@ -60,29 +60,37 @@ if username:
     name, bio, image_url, favorite_films = scrape_profile(username)
 
     # Displaying the details using Streamlit
-    #st.title(name)
+    # st.title(name)
     st.markdown("<h1 style='text-align: center;'>{}</h1>".format(name), unsafe_allow_html=True)
-    
+
     if image_url:
         try:
             response = requests.get(image_url)
             img = Image.open(BytesIO(response.content))
-    
+
             # Resize the image to desired dimensions
             new_width = 200  # Adjust the width as needed
             new_height = 200  # Adjust the height as needed
             img_resized = img.resize((new_width, new_height))
-    
+
             # Mask the resized image to a circle
             img_circle = mask_to_circle(img_resized)
-    
-            # Display the circular image
-            st.image(img_circle, width=150, caption="Icon")
+
+            # Create a layout with two columns
+            col1, col2 = st.beta_columns([1, 3])
+
+            # Display the circular image in the first column
+            with col1:
+                st.image(img_circle, width=150, caption="Icon")
+
+            # Display the bio in the second column
+            with col2:
+                st.write(bio)
             
         except Exception as e:
             st.error(str(e))
     
-    st.write(bio)
+    #st.write(bio)
     
     st.subheader("Favorite Films:")
     poster_images = []
