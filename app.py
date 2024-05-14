@@ -13,31 +13,27 @@ def scrape_profile(username):
     bio = soup.find('meta', property='og:description')['content']
     image_url = soup.find('meta', property='og:image')['content']
     
-    # Extracting favorite films and their posters
-    favorites_section = soup.find('section', class_='poster-list')
-    favorites = []
-    if favorites_section:
-        posters = favorites_section.find_all('img', class_='image')
-        for poster in posters:
-            favorites.append(poster['src'])
+    # Extracting favorite films posters
+    posters = []
+    poster_containers = soup.find_all('li', class_='poster-container')
+    for container in poster_containers:
+        poster_url = container.find('img')['src']
+        posters.append(poster_url)
     
-    return name, bio, image_url, favorites
+    return name, bio, image_url, posters
 
 # User input for username
 username = st.text_input("Enter your Letterboxd username:")
 
 if username:
     # Scraping the profile
-    name, bio, image_url, favorites = scrape_profile(username)
+    name, bio, image_url, posters = scrape_profile(username)
 
     # Displaying the details using Streamlit
     st.title(name)
     st.image(image_url, caption='Profile Picture', use_column_width=True)
     st.write(bio)
     
-    st.header("Favorite Films:")
-    if favorites:
-        for favorite in favorites:
-            st.image(favorite, caption='', use_column_width=True)
-    else:
-        st.write("No favorite films found.")
+    st.header("Favorite Films")
+    for poster_url in posters:
+        st.image(poster_url, caption='', use_column_width=True)
