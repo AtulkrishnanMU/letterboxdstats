@@ -50,8 +50,13 @@ if username:
     st.write(bio)
     
     st.subheader("Favorite Films:")
+    poster_images = []
     for film_name, film_link in favorite_films:
         st.markdown(f"**{film_name}**")
         movie_image_url = get_movie_details(film_link)
         if movie_image_url:
-            st.image(movie_image_url, caption=film_name, use_column_width=True)
+            poster_images.append(movie_image_url)
+    
+    # Displaying poster images
+    if poster_images:
+        st.image(poster_images, caption=[film_name for film_name, _ in favorite_films], width=150)
