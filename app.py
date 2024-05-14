@@ -329,7 +329,7 @@ if username:
     # Display top genres bar graph
     genre_counts = count_genre_entries(username)
 
-    sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+    sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:9]
 
     modified_genre_counts = {}
     for index, (key, value) in enumerate(sorted_genre_counts, start=1):
