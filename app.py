@@ -62,7 +62,10 @@ if username:
     # Extracting first sentence, number of films watched, and bio
     first_sentence = bio.split('.')[0] + '.'
     films_watched = re.search(r'(\d{1,3}(,\d{3})*)(\.\d+)?', bio).group()
-    bio_text = bio.split('Bio: ')[1].strip()
+    try:
+        bio_text = bio.split('Bio: ')[1].strip()
+    except:
+        bio_text = ""
 
     # Displaying the details using Streamlit
     # st.title(name)
@@ -92,7 +95,8 @@ if username:
             with col2:
                 st.markdown(f"**{first_sentence}**")
                 st.write(f"Films watched: **{films_watched}**")
-                st.write(f"Bio: {bio_text}")
+                if bio_text !="":
+                    st.write(f"Bio: {bio_text}")
             
         except Exception as e:
             st.error(str(e))
