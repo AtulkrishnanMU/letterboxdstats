@@ -357,7 +357,7 @@ if username:
     #df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
     
     # Plot the bar chart using Streamlit's st.bar_chart()
-    st.bar_chart(df_country_counts.set_index('Genre'))
+    st.bar_chart(df_country_counts.set_index('Country'))
 
 
 
