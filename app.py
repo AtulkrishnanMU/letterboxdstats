@@ -135,7 +135,7 @@ def extract_movies(url):
     return film_slugs
 
 def extract_all_movies(username):
-    base_url = f"https://letterboxd.com/{username}/films/"
+    base_url = f"https://letterboxd.com/{username}/films/by/date-earliest/"
     all_movies = []
     page_num = 1
     while True:
