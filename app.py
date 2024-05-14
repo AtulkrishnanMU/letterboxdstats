@@ -294,7 +294,7 @@ if username:
       
       # Displaying poster images
       if poster_images:
-          st.image(poster_images, caption=film_names_with_year, width=70)
+          st.image(poster_images, caption=film_names_with_year, width=80)
     except:
         st.write("No favorite films")
 
