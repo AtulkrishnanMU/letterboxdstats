@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import streamlit as st
 import re
-from PIL import Image
+from PIL import Image, ImageDraw
 import requests
 from io import BytesIO
 
