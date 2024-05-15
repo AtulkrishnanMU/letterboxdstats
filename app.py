@@ -263,23 +263,23 @@ def get_top_languages(username):
 
     return top_languages_dict
 
-def get_movie_statistics():
+def get_movie_statistics(username):
   
     # Fetch total hours watched
-    c.execute("SELECT SUM(runtime) FROM movies")
+    c.execute("SELECT SUM(runtime) FROM movies WHERE username = ?", (username,))
     total_minutes = c.fetchone()[0]
     total_hours = total_minutes / 60
 
     # Fetch number of distinct directors watched
-    c.execute("SELECT COUNT(DISTINCT director) FROM movies")
+    c.execute("SELECT COUNT(DISTINCT director) FROM movies WHERE username = ?", (username,))
     distinct_directors = c.fetchone()[0]
 
     # Fetch number of distinct countries watched
-    c.execute("SELECT COUNT(DISTINCT country) FROM movies")
+    c.execute("SELECT COUNT(DISTINCT country) FROM movies WHERE username = ?", (username,))
     distinct_countries = c.fetchone()[0]
 
     # Fetch number of distinct languages watched
-    c.execute("SELECT COUNT(DISTINCT language) FROM movies")
+    c.execute("SELECT COUNT(DISTINCT language) FROM movies WHERE username = ?", (username,))
     distinct_languages = c.fetchone()[0]
 
     # Close the connection
@@ -357,7 +357,7 @@ if username:
       #st.script("document.querySelector('#stop_button').disabled = true;")
 
     # Get top categories
-    total_hours, distinct_directors, distinct_countries, distinct_languages = get_movie_statistics()
+    total_hours, distinct_directors, distinct_countries, distinct_languages = get_movie_statistics(username)
 
     #st.markdown(f"<span style='font-size: 36px;'>{total_hours}</span> **HOURS**   <span style='font-size: 36px;'>{distinct_directors}</span> **DIRECTORS**   <span style='font-size: 36px;'>{distinct_countries}</span> **COUNTRIES**   <span style='font-size: 36px;'>{distinct_languages}</span> **LANGUAGES**", unsafe_allow_html=True)
 
