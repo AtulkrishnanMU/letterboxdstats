@@ -367,7 +367,7 @@ def get_top_cast():
     query = '''
         SELECT TRIM(cast_member) AS cast_member, COUNT(*) AS cast_count
         FROM (
-            SELECT CAST(UNNEST(SPLIT(cast, ', ')) AS VARCHAR) AS cast_member
+            SELECT CAST(SUBSTR(cast, instr(cast, ',')+1) AS VARCHAR) AS cast_member
             FROM movies
         )
         WHERE cast_member != ''
