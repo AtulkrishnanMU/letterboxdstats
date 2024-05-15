@@ -421,18 +421,18 @@ if username:
     
     # Display the line graph
     st.plotly_chart(fig_line, use_container_width=True)
-
-    genre_counts = count_genre_entries(username)
-    fig_genre = create_bar_chart(
-        genre_counts, 
-        x_label="GENRES", 
-        y_label=""
-    )
     
     country_counts = get_top_countries(username)
     fig_country = create_bar_chart(
         country_counts, 
         x_label="COUNTRIES", 
+        y_label=""
+    )
+
+    genre_counts = count_genre_entries(username)
+    fig_genre = create_bar_chart(
+        genre_counts, 
+        x_label="GENRES", 
         y_label=""
     )
     
