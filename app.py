@@ -100,6 +100,7 @@ def scrape_profile(username):
     image_url = soup.find('meta', property='og:image')['content']
     
     # Extracting favorite films and their links
+    '''
     favorite_films = []
     films_container = soup.find('section', id='favourites')
     if films_container:
@@ -108,8 +109,8 @@ def scrape_profile(username):
             film_name = poster.find('div', class_='film-poster')['data-film-slug']
             film_link = f"https://letterboxd.com/film/{film_name}/"
             favorite_films.append((film_name, film_link))
-    
-    return name, bio, image_url, favorite_films
+    '''
+    return name, bio, image_url
 
 # Function to get movie details from JSON data
 def get_movie_details(movie_link):
@@ -326,7 +327,7 @@ username = st.text_input("Enter your Letterboxd username:")
 
 if username:
     # Scraping the profile
-    name, bio, image_url, favorite_films = scrape_profile(username)
+    name, bio, image_url = scrape_profile(username)
 
     # Extracting first sentence, number of films watched, and bio
     st.write(bio)
