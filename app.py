@@ -427,31 +427,28 @@ if username:
     fig_genre = create_bar_chart(
         genre_counts, 
         x_label="GENRES", 
-        y_label="", 
-        title="Top Genres"
+        y_label=""
     )
     
     country_counts = get_top_countries(username)
     fig_country = create_bar_chart(
         country_counts, 
         x_label="COUNTRIES", 
-        y_label="", 
-        title="Top Countries"
+        y_label=""
     )
     
     language_counts = get_top_languages(username)
     fig_language = create_bar_chart(
         language_counts, 
         x_label="LANGUAGES", 
-        y_label="", 
-        title="Top Languages"
+        y_label=""
     )
 
 
     left,right,center=st.columns(3)
-    left.plotly_chart(fig_country, height=800)
-    right.plotly_chart(fig_language, height=800)
-    center.plotly_chart(fig_genre, height=800)
+    left.plotly_chart(fig_country, use_container_width=True)
+    right.plotly_chart(fig_language, use_container_width=True)
+    center.plotly_chart(fig_genre, use_container_width=True)
         
     
 
