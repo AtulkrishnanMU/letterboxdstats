@@ -365,18 +365,15 @@ def get_top_cast():
     
     # Query to get the top 10 cast members based on their frequency in the entire table
     query = '''
-    SELECT cast_member, COUNT(*) as cast_count
-    FROM (
-        SELECT trim(cast_member) as cast_member
+        SELECT TRIM(cast_member) AS cast_member, COUNT(*) AS cast_count
         FROM (
-            SELECT trim(cast) as cast FROM movies
-        ) as c
-        JOIN movies
-        ON ',' || c.cast || ',' LIKE '%,' || movies.cast || ',%'
-    )
-    GROUP BY cast_member
-    ORDER BY cast_count DESC
-    LIMIT 10
+            SELECT CAST(UNNEST(SPLIT(cast, ', ')) AS VARCHAR) AS cast_member
+            FROM movies
+        )
+        WHERE cast_member != ''
+        GROUP BY cast_member
+        ORDER BY cast_count DESC
+        LIMIT 10
     '''
     # Execute the query
     c.execute(query)
