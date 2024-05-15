@@ -403,9 +403,7 @@ if username:
     # Display top genres bar graph
     genre_counts = count_genre_entries(username) #dictionary of the form {Genre1:count1, Genre2:count2...}
 
-    sortedgenre_counts = dict(sorted(genre_counts.items(), key=lambda item: item[1]))
-
-    sorted_genre_counts = dict(list(sortedgenre_counts.items())[:10])
+    sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
     country_counts = get_top_countries(username) #dictionary of the fomr {Country1:count1, Country2:count2...}
 
