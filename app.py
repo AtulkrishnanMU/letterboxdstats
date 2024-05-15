@@ -450,7 +450,9 @@ if username:
         font=dict(color="black"),
         xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
-        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
+        paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
+        height=400,  # Adjust height as needed
+        width=600 
     )
     
     # Display the charts
@@ -483,7 +485,7 @@ if username:
     )
     
     # Display the charts
-    st.plotly_chart(fig_bar)
+    st.plotly_chart(fig_bar, use_container_width=True)
     
     
 
