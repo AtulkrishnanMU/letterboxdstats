@@ -32,6 +32,18 @@ c.execute('''CREATE TABLE IF NOT EXISTS movies
 # Commit changes and close connection
 conn.commit()
 
+def get_year_movie_count(username):
+    conn = sqlite3.connect('movies.db')
+    c = conn.cursor()
+
+    # Retrieve the year and count of movies for each year for the specified username
+    c.execute("SELECT strftime('%Y', release_date) AS year, COUNT(*) AS num_movies FROM movies WHERE username = ? GROUP BY year", (username,))
+    year_movie_count = dict(c.fetchall())
+
+    conn.close()
+
+    return year_movie_count
+
 def get_user_stats(username):
     conn = sqlite3.connect('movies.db')
     c = conn.cursor()
@@ -349,6 +361,31 @@ if username:
         f"<div style='text-align: center;'><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{total_hours}</span><br><b>HOURS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_directors}</span><br><b>DIRECTORS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_countries}</span><br><b>COUNTRIES</b></div><div style='display: inline-block;'><span style='font-size: 36px;'>{distinct_languages}</span><br><b>LANGUAGES</b></div></div>",
         unsafe_allow_html=True
     )
+
+    year_movie_count = get_year_movie_count(username)
+
+    years = list(year_movie_count.keys())
+    movie_counts = list(year_movie_count.values())
+    
+    # Create a line graph for movie counts by year
+    fig_line = px.line(
+        x=years,
+        y=movie_counts,
+        title="<b>Movie Counts by Year</b>",
+        labels={"x": "Year", "y": "Movie Count"},
+        color_discrete_sequence=["#0083b8"],
+        template="plotly_white"
+    )
+    fig_line.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)",
+        xaxis=dict(tickmode="linear"),
+        yaxis=dict(showgrid=False)
+    )
+    
+    # Display the line graph
+    st.plotly_chart(fig_line, use_container_width=True)
+
+    
 
     # Display top genres bar graph
     genre_counts = count_genre_entries(username) #dictionary of the form {Genre1:count1, Genre2:count2...}
