@@ -423,6 +423,13 @@ if username:
     
     # Display the line graph
     st.plotly_chart(fig_line, use_container_width=True)
+
+    language_counts = get_top_languages(username)
+    fig_language = create_bar_chart(
+        language_counts, 
+        x_label="LANGUAGES", 
+        y_label=""
+    )
     
     country_counts = get_top_countries(username)
     fig_country = create_bar_chart(
@@ -435,13 +442,6 @@ if username:
     fig_genre = create_bar_chart(
         genre_counts, 
         x_label="GENRES", 
-        y_label=""
-    )
-    
-    language_counts = get_top_languages(username)
-    fig_language = create_bar_chart(
-        language_counts, 
-        x_label="LANGUAGES", 
         y_label=""
     )
 
