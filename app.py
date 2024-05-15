@@ -291,6 +291,10 @@ def get_movie_statistics(username):
     return total_hours, distinct_directors, distinct_countries, distinct_languages
 
 def create_bar_chart(data, x_label, y_label):
+
+    for key in data.keys():
+    if key == "":
+        data["NaN"] = data.pop(key)
     
     sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)[:10]
     #sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)
