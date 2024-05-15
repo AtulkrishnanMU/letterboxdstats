@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 
 #page layout
-st.set_page_config(page_title="Analytics", page_icon="🌎", layout="wide")
+st.set_page_config(page_title="Letterboxd Stats", page_icon="🌎", layout="wide")
 
 # load CSS Style
 with open('style.css')as f:
@@ -332,39 +332,34 @@ if username:
     st.markdown(f"<div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{total_hours}</span><br><b>HOURS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_directors}</span><br><b>DIRECTORS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_countries}</span><br><b>COUNTRIES</b></div><div style='display: inline-block;'><span style='font-size: 36px;'>{distinct_languages}</span><br><b>LANGUAGES</b></div>", unsafe_allow_html=True)
 
     # Display top genres bar graph
-    genre_counts = count_genre_entries(username)
+    genre_counts = count_genre_entries(username) #dictionary of the form {Genre1:count1, Genre2:count2...}
 
-    sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:9]
+    sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
-    modified_genre_counts = {}
-    for index, (key, value) in enumerate(sorted_genre_counts, start=1):
-        modified_key = f"{index}. {key}"
-        modified_genre_counts[modified_key] = value
+    country_counts = get_top_countries() #dictionary of the fomr {Country1:count1, Country2:count2...}
 
-    print("modified: ", modified_genre_counts)
-    
-    # Create a DataFrame from the sorted genre counts
-    df_genre_counts = pd.DataFrame(list(modified_genre_counts.items()), columns=['Genre', 'Count'])
-    #df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
-    
-    # Plot the bar chart using Streamlit's st.bar_chart()
-    st.bar_chart(df_genre_counts.set_index('Genre'))
+    sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
-    country_counts = get_top_countries()
 
-    sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:9]
 
-    modified_country_counts = {}
-    for index, (key, value) in enumerate(sorted_country_counts, start=1):
-        modified_key = f"{index}. {key}"
-        modified_country_counts[modified_key] = value
-    
-    # Create a DataFrame from the sorted genre counts
-    df_country_counts = pd.DataFrame(list(modified_country_counts.items()), columns=['Country', 'Count'])
-    #df_genre_counts = pd.DataFrame(sorted_genre_counts, columns=['Genre', 'Count'])
-    
-    # Plot the bar chart using Streamlit's st.bar_chart()
-    st.bar_chart(df_country_counts.set_index('Country'))
+        fig_genre = px.bar(
+        x=genre_counts,
+        y=genre_names,
+        orientation='h',
+        title='<b>Top Genres</b>',
+        labels={'x': 'Count', 'y': 'Genre'},
+        color=genre_counts,
+        color_continuous_scale='blues',
+        template='plotly_white'
+    )
+
+    fig_genre.update_layout(
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(color='black'),
+        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),
+        paper_bgcolor='rgba(0, 0, 0, 0)',
+        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),
+    )
 
 
 
