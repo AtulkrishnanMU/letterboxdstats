@@ -412,8 +412,8 @@ if username:
     # Create a bar graph for top genres
     fig_bar = px.bar(
         sorted_genre_counts,
-        x=[genre[0] for genre in sorted_genre_counts],
-        y=[count[1] for count in sorted_genre_counts],
+        y=[genre[0] for genre in sorted_genre_counts],
+        x=[count[1] for count in sorted_genre_counts],
         orientation="h",
         labels={"x": "GENRES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts),
@@ -433,8 +433,8 @@ if username:
     # Create a bar graph for top Countries
     fig_bar = px.bar(
         sorted_country_counts,
-        x=[country[0] for country in sorted_country_counts],
-        y=[count[1] for count in sorted_country_counts],
+        y=[country[0] for country in sorted_country_counts],
+        x=[count[1] for count in sorted_country_counts],
         orientation="h",
         labels={"x": "COUNTRIES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_country_counts),
@@ -458,8 +458,8 @@ if username:
     # Create a bar graph for top languages
     fig_bar = px.bar(
         sorted_language_counts,
-        x=[language[0] for language in sorted_language_counts],
-        y=[count[1] for count in sorted_language_counts],
+        y=[language[0] for language in sorted_language_counts],
+        x=[count[1] for count in sorted_language_counts],
         orientation="h",
         labels={"x": "LANGUAGES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_language_counts),
