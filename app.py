@@ -340,32 +340,42 @@ if username:
 
     sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
-    genre_names = [item[0] for item in sorted_genre_counts]
-    genre_counts = [item[1] for item in sorted_genre_counts]
-
-    fig_genre = px.bar(
-        x=genre_counts,
-        y=genre_names,
-        orientation='h',
-        title='<b>Top Genres</b>',
-        labels={'x': 'Count', 'y': 'Genre'},
-        color=genre_counts,
-        color_continuous_scale='blues',
-        template='plotly_white'
+    # Create a bar graph for top genres
+    fig_bar = px.bar(
+        sorted_genre_counts,
+        x=[genre[0] for genre in sorted_genre_counts],
+        y=[count[1] for count in sorted_genre_counts],
+        title="<b>Top Genres</b>",
+        labels={"x": "Genre", "y": "Count"},
+        color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts),
+        template="plotly_white"
     )
-
-    fig_genre.update_layout(
-        plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color='black'),
-        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),
-        paper_bgcolor='rgba(0, 0, 0, 0)',
-        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),
+    fig_bar.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="black"),
+        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
+        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
+        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
     )
-
-    fig_genre.show() 
-
-
-
-
+    
+    # Create a line graph for genre counts (optional, assuming you want to visualize trends over time)
+    # You might need to provide a time dimension (e.g., year) if available in your data.
+    
+    # Create a pie chart for genre distribution
+    fig_pie = px.pie(
+        values=[count[1] for count in sorted_genre_counts],
+        names=[genre[0] for genre in sorted_genre_counts],
+        title="Genre Distribution",
+        template="plotly_white"
+    )
+    fig_pie.update_layout(legend_title="Genres", legend_y=0.9)
+    fig_pie.update_traces(textinfo='percent+label', textposition='inside')
+    
+    # Display the charts
+    st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_pie, use_container_width=True)
+    
+    
+    
 
     
