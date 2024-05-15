@@ -505,6 +505,7 @@ if username:
         cols = st.beta_columns(5)
         for i, (director, count) in enumerate(top_directors):
             # Display director's name and number of movies
+            print(director, count)
             cols[i % 5].write(f"{director} - {count} movies")
     else:
         st.write("No data found for the given username.")
