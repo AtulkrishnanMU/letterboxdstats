@@ -478,11 +478,10 @@ if username:
         xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
         paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
-        width=800
     )
     
     # Display the charts
-    st.plotly_chart(fig_bar)
+    st.plotly_chart(fig_bar, use_container_width=True)
     
     
 
