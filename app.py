@@ -321,6 +321,10 @@ def create_bar_chart(data, x_label, y_label):
     return fig
 
 def get_top_directors(username):
+    conn = sqlite3.connect('movies.db')
+    # Connect to SQLite database
+    c = conn.cursor()
+    
     # Query to get the top 10 directors based on their frequency for a given username
     query = f'''
         SELECT director, COUNT(*) as director_count
