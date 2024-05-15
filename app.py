@@ -374,10 +374,10 @@ def get_top_cast():
                 SELECT cast, number + 1
                 FROM (
                     SELECT cast, 1 AS number
-                    FROM your_table
+                    FROM movies
                     UNION ALL
                     SELECT cast, number + 1
-                    FROM your_table, (SELECT 2 AS number UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10)
+                    FROM movies, (SELECT 2 AS number UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10)
                     WHERE LENGTH(cast) - LENGTH(REPLACE(cast, ',', '')) >= number - 1
                 )
             )
