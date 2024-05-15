@@ -368,7 +368,7 @@ if username:
         sorted_country_counts,
         x=[country[0] for country in sorted_country_counts],
         y=[count[1] for count in sorted_country_counts],
-        labels={"x": "Countries", "y": "Count"},
+        labels={"x": "COUNTRIES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_country_counts),
         template="plotly_white"
     )
