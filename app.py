@@ -344,10 +344,10 @@ def get_top_directors(username):
     c = conn.cursor()
     
     # Query to get the top 10 directors based on their frequency for a given username
-    query = f'''
+    query = '''
         SELECT director, COUNT(*) as director_count
         FROM movies
-        WHERE username = ?
+        WHERE username = ? AND director IS NOT NULL
         GROUP BY director
         ORDER BY director_count DESC
         LIMIT 10
@@ -503,7 +503,7 @@ if username:
     if top_directors:
         st.write("Top 10 directors for user", username, ":")
         cols = st.beta_columns(5)
-        for i, (director, count) in enumerate(top_directors, start=1):
+        for i, (director, count) in enumerate(top_directors):
             # Display director's name and number of movies
             cols[i % 5].write(f"{director} - {count} movies")
     else:
