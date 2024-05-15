@@ -291,7 +291,7 @@ def get_movie_statistics(username):
     return total_hours, distinct_directors, distinct_countries, distinct_languages
 
 def create_bar_chart(data, x_label, y_label):
-    print(data)
+    
     sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)[:10]
     #sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)
     sorted_data_reverse = sorted_data[::-1]
@@ -313,6 +313,11 @@ def create_bar_chart(data, x_label, y_label):
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),
         paper_bgcolor='rgba(0, 0, 0, 0)'
     )
+
+    # Display the data
+    st.write("Data:")
+    st.write(sorted_data)
+    st.write("\n")
     
     return fig
 
