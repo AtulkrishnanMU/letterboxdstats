@@ -291,8 +291,9 @@ def get_movie_statistics(username):
     return total_hours, distinct_directors, distinct_countries, distinct_languages
 
 def create_bar_chart(data, x_label, y_label):
-    #sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)[:10]
-    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)
+    print(data)
+    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)[:10]
+    #sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)
     sorted_data_reverse = sorted_data[::-1]
     
     fig = px.bar(
