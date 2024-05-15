@@ -371,7 +371,7 @@ if username:
     
     #st.write(bio)
 
-    data_collection_text = st.text("Collecting your data")
+    data_collection_text = st.text("Collecting your data...")
 
     all_movies = extract_all_movies(username)
 
@@ -389,7 +389,7 @@ if username:
     if stop_flag:
       c.execute("SELECT COUNT(*) FROM movies WHERE username = ?", (username,))
       entry_count = c.fetchone()[0]
-      data_collection_text.text(f"{entry_count} movies imported now")
+      data_collection_text.text(f"{entry_count} movies imported till now")
       #st.script("document.querySelector('#stop_button').disabled = true;")
 
     # Get top categories
