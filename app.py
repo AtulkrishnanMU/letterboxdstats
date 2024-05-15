@@ -507,8 +507,10 @@ if username:
             # Get director's photo URL
             photo_url = get_director_photo_url(director)
             if photo_url:
-                # Display director's name and photo in a small size
-                cols[i % 5].image(photo_url, caption=director, use_column_width='auto')
+                # Create caption with director's name and number of movies
+                caption = f"{director} - {count} movies"
+                # Display director's name and photo with a specific width
+                cols[i % 5].image(photo_url, caption=caption, width=100)
             else:
                 pass
     else:
