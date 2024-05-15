@@ -1,0 +1,20 @@
+[data-testid=metric-container] {
+    box-shadow: 0 0 1px #044f4f;
+    padding: 1px;
+    color: rgb(255, 255, 255);
+    overflow-wrap: break-word;
+    white-space: break-spaces;
+    font-size: 100%;
+   
+}
+
+.plot-container>div {
+    box-shadow: 0 0 5px #140e0e;
+    padding: 3px;
+    border-width: 3px;
+}
+
+div[data-testid="stDataframe"] div[role="button"] p {
+    font-size: 1.3rem;
+    color: rgb(1, 84, 84);
+}
