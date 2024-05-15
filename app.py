@@ -14,6 +14,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+# Create an instance of the IMDb class
+ia = imdb.IMDb()
+
 #page layout
 st.set_page_config(page_title="Letterboxd Stats", page_icon="🌎", layout="wide")
 
