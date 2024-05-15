@@ -100,16 +100,14 @@ def scrape_profile(username):
     image_url = soup.find('meta', property='og:image')['content']
     
     # Extracting favorite films and their links
-    '''
-    favorite_films = []
-    films_container = soup.find('section', id='favourites')
-    if films_container:
-        film_posters = films_container.find_all('li', class_='poster-container')
-        for poster in film_posters:
-            film_name = poster.find('div', class_='film-poster')['data-film-slug']
-            film_link = f"https://letterboxd.com/film/{film_name}/"
-            favorite_films.append((film_name, film_link))
-    '''
+    #favorite_films = []
+    #films_container = soup.find('section', id='favourites')
+    #if films_container:
+        #film_posters = films_container.find_all('li', class_='poster-container')
+        #for poster in film_posters:
+            #film_name = poster.find('div', class_='film-poster')['data-film-slug']
+            #film_link = f"https://letterboxd.com/film/{film_name}/"
+            #favorite_films.append((film_name, film_link))
     return name, bio, image_url
 
 # Function to get movie details from JSON data
