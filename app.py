@@ -494,8 +494,8 @@ if username:
     #st.plotly_chart(fig_language, use_container_width=True)
 
     left,right,center=st.columns(3)
-    left.plotly_chart(fig_genre, height=800)
-    right.plotly_chart(fig_country, height=800)
+    left.plotly_chart(fig_country, height=800)
+    right.plotly_chart(fig_genre, height=800)
     center.plotly_chart(fig_language, height=800)
         
     
