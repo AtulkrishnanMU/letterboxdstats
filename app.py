@@ -484,14 +484,19 @@ if username:
     #st.plotly_chart(fig_bar, use_container_width=True)
 
     # Display the charts in three columns
-    st.subheader("Top Genres")
-    st.plotly_chart(fig_genre, use_container_width=True)
+    #st.subheader("Top Genres")
+    #st.plotly_chart(fig_genre, use_container_width=True)
     
-    st.subheader("Top Countries")
-    st.plotly_chart(fig_country, use_container_width=True)
+    #st.subheader("Top Countries")
+    #st.plotly_chart(fig_country, use_container_width=True)
     
-    st.subheader("Top Languages")
-    st.plotly_chart(fig_language, use_container_width=True)
+    #st.subheader("Top Languages")
+    #st.plotly_chart(fig_language, use_container_width=True)
+
+    left,right,center=st.columns(3)
+    left.plotly_chart(fig_genre, use_container_width=True)
+    right.plotly_chart(fig_country, use_container_width=True)
+    center.plotly_chart(fig_language, use_container_width=True)
         
     
 
