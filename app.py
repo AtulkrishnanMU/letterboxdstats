@@ -546,16 +546,16 @@ if username:
         st.write("No data found for the given username.")
 
     # Get top 10 cast members based on their frequency
-    top_cast = get_top_cast()
+    #top_cast = get_top_cast()
 
     # Display the results
-    if top_cast:
-        st.markdown(f"<h3 style='text-align: center;'>ACTORS</h3>", unsafe_allow_html=True)
-        cols = st.columns(5)
-        for i, (cast_member, count) in enumerate(top_cast, start=1):
-            cols[i % 5].write(f"{i}. {cast_member} - {count} movies")
-    else:
-        print("No data found.")
+    #if top_cast:
+        #st.markdown(f"<h3 style='text-align: center;'>ACTORS</h3>", unsafe_allow_html=True)
+        #cols = st.columns(5)
+        #for i, (cast_member, count) in enumerate(top_cast, start=1):
+            #cols[i % 5].write(f"{i}. {cast_member} - {count} movies")
+    #else:
+        #print("No data found.")
         
     
 
