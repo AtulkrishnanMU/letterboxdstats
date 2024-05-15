@@ -350,7 +350,7 @@ def get_top_directors(username):
         WHERE username = ? AND director IS NOT NULL AND director != ''
         GROUP BY director
         ORDER BY director_count DESC
-        LIMIT 10
+        LIMIT 20
     '''
     # Execute the query
     c.execute(query, (username,))
