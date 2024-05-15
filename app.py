@@ -157,7 +157,7 @@ def extract_all_movies(username):
     
     return all_movies
 
-def fetch_movie_details(username, movie_titles, stop_flag=0, data_collection_text):
+def fetch_movie_details(username, movie_titles, stop_flag, data_collection_text):
     ia = IMDb()
 
     conn = sqlite3.connect('movies.db')
