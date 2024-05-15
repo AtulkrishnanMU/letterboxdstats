@@ -348,8 +348,7 @@ if username:
         sorted_genre_counts,
         x=[genre[0] for genre in sorted_genre_counts],
         y=[count[1] for count in sorted_genre_counts],
-        title="<b>GENRES</b>",
-        labels={"x": "Genre", "y": "Count"},
+        labels={"x": "GENRES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts),
         template="plotly_white"
     )
