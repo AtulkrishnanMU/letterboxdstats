@@ -229,6 +229,22 @@ def get_top_countries(username):
 
     return top_countries_dict
 
+def get_top_languages(username):
+    conn = sqlite3.connect('movies.db')
+    # Connect to SQLite database
+    c = conn.cursor()
+    # Fetch top 9 languages by count
+    c.execute("SELECT language, COUNT(*) as count FROM movies WHERE username = ? GROUP BY language ORDER BY count DESC LIMIT 9", (username,))
+    top_languages = c.fetchall()
+
+    # Close the connection
+    conn.close()
+
+    # Convert the results to a dictionary
+    top_languages_dict = {language: count for language, count in top_languages}
+
+    return top_languages_dict
+
 def get_movie_statistics():
   
     # Fetch total hours watched
@@ -383,7 +399,29 @@ if username:
     # Display the charts
     st.plotly_chart(fig_bar, use_container_width=True)
         
+        language_counts = get_top_languages(username) #dictionary of the fomr {language1:count1, language2:count2...}
+
+    sorted_language_counts = sorted(language_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+
+    # Create a bar graph for top languages
+    fig_bar = px.bar(
+        sorted_language_counts,
+        x=[language[0] for language in sorted_language_counts],
+        y=[count[1] for count in sorted_language_counts],
+        labels={"x": "languages", "y": "Count"},
+        color_discrete_sequence=["#0083B8"]*len(sorted_language_counts),
+        template="plotly_white"
+    )
+    fig_bar.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="black"),
+        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
+        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
+        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
+    )
     
+    # Display the charts
+    st.plotly_chart(fig_bar, use_container_width=True)
     
     
 
