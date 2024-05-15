@@ -270,6 +270,7 @@ def get_movie_statistics(username):
     c.execute("SELECT SUM(runtime) FROM movies WHERE username = ?", (username,))
     total_minutes = c.fetchone()[0]
     total_hours = total_minutes / 60
+    total_hours = round(total_hours, 2)
 
     # Fetch number of distinct directors watched
     c.execute("SELECT COUNT(DISTINCT director) FROM movies WHERE username = ?", (username,))
