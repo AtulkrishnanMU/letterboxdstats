@@ -298,6 +298,7 @@ if username:
     name, bio, image_url, favorite_films = scrape_profile(username)
 
     # Extracting first sentence, number of films watched, and bio
+    st.write(bio)
     first_sentence = bio.split('.')[0] + '.'
     films_watched = re.search(r'(\d{1,3}(,\d{3})*)(\.\d+)?', bio).group()
     total_films = int(films_watched.replace(',', ''))
