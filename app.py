@@ -431,7 +431,7 @@ if username:
     )
     
     # Display the charts
-    st.plotly_chart(fig_bar, use_container_width=True)
+    #st.plotly_chart(fig_bar, use_container_width=True)
 
     sorted_country_counts_reverse = sorted_country_counts[::-1]
     
@@ -454,7 +454,7 @@ if username:
     )
     
     # Display the charts
-    st.plotly_chart(fig_bar, use_container_width=True)
+    #st.plotly_chart(fig_bar, use_container_width=True)
         
     language_counts = get_top_languages(username) #dictionary of the fomr {language1:count1, language2:count2...}
 
@@ -481,8 +481,18 @@ if username:
     )
     
     # Display the charts
-    st.plotly_chart(fig_bar, use_container_width=True)
+    #st.plotly_chart(fig_bar, use_container_width=True)
+
+    # Display the charts in three columns
+    st.subheader("Top Genres")
+    st.plotly_chart(fig_genre, use_container_width=True)
     
+    st.subheader("Top Countries")
+    st.plotly_chart(fig_country, use_container_width=True)
+    
+    st.subheader("Top Languages")
+    st.plotly_chart(fig_language, use_container_width=True)
+        
     
 
     
