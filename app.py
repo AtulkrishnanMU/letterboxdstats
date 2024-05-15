@@ -361,6 +361,9 @@ if username:
         paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
     )
     
+    # Display the charts
+    st.plotly_chart(fig_bar, use_container_width=True)
+        
     
     
     
