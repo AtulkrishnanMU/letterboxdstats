@@ -292,7 +292,7 @@ def get_movie_statistics(username):
 
 def create_bar_chart(data, x_label, y_label):
 
-    modified_data = {key if key != "": key else "NaN": value for key, value in data.items()}
+    modified_data = {key if key != "" else "NaN": value for key, value in data.items()}
     
     sorted_data = sorted(modified_data.items(), key=lambda x: x[1], reverse=True)[:10]
     
