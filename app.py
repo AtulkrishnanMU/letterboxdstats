@@ -290,7 +290,7 @@ def get_movie_statistics(username):
     # Return the results
     return total_hours, distinct_directors, distinct_countries, distinct_languages
 
-def create_bar_chart(data, x_label, y_label, title):
+def create_bar_chart(data, x_label, y_label):
     sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)[:10]
     sorted_data_reverse = sorted_data[::-1]
     
@@ -301,8 +301,7 @@ def create_bar_chart(data, x_label, y_label, title):
         orientation="h",
         labels={"x": x_label, "y": y_label},
         color_discrete_sequence=["#0083B8"]*len(sorted_data_reverse),
-        template="plotly_white",
-        title=title
+        template="plotly_white"
     )
     
     fig.update_layout(
