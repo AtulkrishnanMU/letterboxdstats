@@ -14,6 +14,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+#page layout
+st.set_page_config(page_title="Analytics", page_icon="🌎", layout="wide")
+
 # Connect to SQLite database
 conn = sqlite3.connect('movies.db')
 c = conn.cursor()
