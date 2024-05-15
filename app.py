@@ -342,7 +342,7 @@ if username:
 
 
 
-        fig_genre = px.bar(
+    fig_genre = px.bar(
         x=genre_counts,
         y=genre_names,
         orientation='h',
