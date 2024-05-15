@@ -344,10 +344,10 @@ def get_top_directors(username):
     c = conn.cursor()
     
     # Query to get the top 10 directors based on their frequency for a given username
-    query = '''
+    query = f'''
         SELECT director, COUNT(*) as director_count
         FROM movies
-        WHERE username = ? AND director IS NOT NULL
+        WHERE username = ? AND director IS NOT NULL AND director != ''
         GROUP BY director
         ORDER BY director_count DESC
         LIMIT 10
