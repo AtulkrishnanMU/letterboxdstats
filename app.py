@@ -452,7 +452,7 @@ if username:
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
         paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
         height=600,  # Adjust height as needed
-        width=800 
+        width=1500 
     )
     
     # Display the charts
