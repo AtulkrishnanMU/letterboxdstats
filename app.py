@@ -320,6 +320,20 @@ def create_bar_chart(data, x_label, y_label):
 
     return fig
 
+def get_director_photo_url(director_name):
+    # Search for the director
+    director_search = ia.search_person(director_name)
+    if director_search:
+        # Get the first director from the search results
+        director = director_search[0]
+        # Fetch the director's details
+        ia.update(director)
+        # Get the IMDb URL of the director
+        imdb_url = director['full-size headshot']
+        return imdb_url
+    else:
+        return None
+
 def get_top_directors(username):
     conn = sqlite3.connect('movies.db')
     # Connect to SQLite database
