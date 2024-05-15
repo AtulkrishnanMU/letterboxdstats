@@ -435,7 +435,9 @@ if username:
         font=dict(color="black"),
         xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
-        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
+        paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
+        width=800,  # Adjust width as needed
+        height=400  # Adjust height as needed
     )
     
     # Display the charts
@@ -456,7 +458,9 @@ if username:
         font=dict(color="black"),
         xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
-        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
+        paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
+        width=800,  # Adjust width as needed
+        height=400  # Adjust height as needed
     )
     
     # Display the charts
@@ -477,7 +481,9 @@ if username:
         font=dict(color="black"),
         xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
-        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
+        paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
+        width=800,  # Adjust width as needed
+        height=400  # Adjust height as needed
     )
     
     # Display the charts
