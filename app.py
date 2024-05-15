@@ -292,19 +292,17 @@ def get_movie_statistics(username):
 
 def create_bar_chart(data, x_label, y_label):
     
-    # Convert data dictionary to DataFrame
-    df = pd.DataFrame(data.items(), columns=[x_label, y_label])
-    
-    # Sort DataFrame by values in y_label column
-    df_sorted = df.sort_values(by=y_label, ascending=False)[:10]
+    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)[:10]
+    #sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)
+    sorted_data_reverse = sorted_data[::-1]
     
     fig = px.bar(
-        df_sorted,
-        x=y_label,
-        y=x_label,
+        sorted_data_reverse,
+        y=[item[0] for item in sorted_data_reverse],
+        x=[item[1] for item in sorted_data_reverse],
         orientation="h",
         labels={"x": x_label, "y": y_label},
-        color_discrete_sequence=["#0083B8"]*len(df_sorted),
+        color_discrete_sequence=["#0083B8"]*len(sorted_data_reverse),
         template="plotly_white"
     )
     
@@ -315,7 +313,7 @@ def create_bar_chart(data, x_label, y_label):
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),
         paper_bgcolor='rgba(0, 0, 0, 0)'
     )
-    
+
     return fig
 
 # User input for username
