@@ -290,6 +290,31 @@ def get_movie_statistics(username):
     # Return the results
     return total_hours, distinct_directors, distinct_countries, distinct_languages
 
+def create_bar_chart(data, x_label, y_label, title):
+    sorted_data = sorted(data.items(), key=lambda x: x[1], reverse=True)[:10]
+    sorted_data_reverse = sorted_data[::-1]
+    
+    fig = px.bar(
+        sorted_data_reverse,
+        y=[item[0] for item in sorted_data_reverse],
+        x=[item[1] for item in sorted_data_reverse],
+        orientation="h",
+        labels={"x": x_label, "y": y_label},
+        color_discrete_sequence=["#0083B8"]*len(sorted_data_reverse),
+        template="plotly_white",
+        title=title
+    )
+    
+    fig.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="black"),
+        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),
+        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),
+        paper_bgcolor='rgba(0, 0, 0, 0)'
+    )
+    
+    return fig
+
 # User input for username
 username = st.text_input("Enter your Letterboxd username:")
 
@@ -398,100 +423,30 @@ if username:
     # Display the line graph
     st.plotly_chart(fig_line, use_container_width=True)
 
-    
-
-    # Display top genres bar graph
-    genre_counts = count_genre_entries(username) #dictionary of the form {Genre1:count1, Genre2:count2...}
-
-    sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10]
-
-    country_counts = get_top_countries(username) #dictionary of the fomr {Country1:count1, Country2:count2...}
-
-    sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:10]
-
-    language_counts = get_top_languages(username) #dictionary of the fomr {language1:count1, language2:count2...}
-
-    sorted_language_counts = sorted(language_counts.items(), key=lambda x: x[1], reverse=True)[:10]
-
-    # Sort the genre counts in reverse order
-    sorted_genre_counts_reverse = sorted_genre_counts[::-1]
-
-    sorted_country_counts_reverse = sorted_country_counts[::-1]
-
-    sorted_language_counts_reverse = sorted_language_counts[::-1]
-    
-    # Create a bar graph for top genres
-    fig_genre = px.bar(
-        sorted_genre_counts_reverse,
-        y=[genre[0] for genre in sorted_genre_counts_reverse],
-        x=[count[1] for count in sorted_genre_counts_reverse],
-        orientation="h",
-        labels={"x": "GENRES", "y": ""},
-        color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts_reverse),
-        template="plotly_white"
-    )
-    fig_genre.update_layout(
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="black"),
-        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
-        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
-        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
+    genre_counts = count_genre_entries(username)
+    fig_genre = create_bar_chart(
+        genre_counts, 
+        x_label="GENRES", 
+        y_label="", 
+        title="Top Genres"
     )
     
-    # Display the charts
-    #st.plotly_chart(fig_bar, use_container_width=True)
-    
-    # Create a bar graph for top countries
-    fig_country = px.bar(
-        sorted_country_counts_reverse,
-        y=[country[0] for country in sorted_country_counts_reverse],
-        x=[count[1] for count in sorted_country_counts_reverse],
-        orientation="h",
-        labels={"x": "COUNTRIES", "y": ""},
-        color_discrete_sequence=["#0083B8"]*len(sorted_country_counts_reverse),
-        template="plotly_white"
-    )
-    fig_country.update_layout(
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="black"),
-        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
-        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
-        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
+    country_counts = get_top_countries(username)
+    fig_country = create_bar_chart(
+        country_counts, 
+        x_label="COUNTRIES", 
+        y_label="", 
+        title="Top Countries"
     )
     
-    # Display the charts
-    #st.plotly_chart(fig_bar, use_container_width=True)
-    
-    # Create a bar graph for top languages
-    fig_language = px.bar(
-        sorted_language_counts_reverse,
-        y=[language[0] for language in sorted_language_counts_reverse],
-        x=[count[1] for count in sorted_language_counts_reverse],
-        orientation="h",
-        labels={"x": "LANGUAGES", "y": ""},
-        color_discrete_sequence=["#0083B8"]*len(sorted_language_counts_reverse),
-        template="plotly_white"
+    language_counts = get_top_languages(username)
+    fig_language = create_bar_chart(
+        language_counts, 
+        x_label="LANGUAGES", 
+        y_label="", 
+        title="Top Languages"
     )
-    fig_language.update_layout(
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="black"),
-        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
-        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
-        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
-    )
-    
-    # Display the charts
-    #st.plotly_chart(fig_bar, use_container_width=True)
 
-    # Display the charts in three columns
-    #st.subheader("Top Genres")
-    #st.plotly_chart(fig_genre, use_container_width=True)
-    
-    #st.subheader("Top Countries")
-    #st.plotly_chart(fig_country, use_container_width=True)
-    
-    #st.subheader("Top Languages")
-    #st.plotly_chart(fig_language, use_container_width=True)
 
     left,right,center=st.columns(3)
     left.plotly_chart(fig_country, height=800)
