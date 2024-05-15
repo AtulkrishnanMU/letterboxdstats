@@ -329,7 +329,10 @@ if username:
 
     #st.markdown(f"<div style='text-align: center;'><span style='font-size: 36px;'>{total_hours}</span><br><b>HOURS</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_directors}</span><br><b>DIRECTORS</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_countries}</span><br><b>COUNTRIES</b></div>   <div style='text-align: center;'><span style='font-size: 36px;'>{distinct_languages}</span><br><b>LANGUAGES</b></div>", unsafe_allow_html=True)
 
-    st.markdown(f"<div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{total_hours}</span><br><b>HOURS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_directors}</span><br><b>DIRECTORS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_countries}</span><br><b>COUNTRIES</b></div><div style='display: inline-block;'><span style='font-size: 36px;'>{distinct_languages}</span><br><b>LANGUAGES</b></div>", unsafe_allow_html=True)
+    st.markdown(
+        f"<div style='text-align: center;'><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{total_hours}</span><br><b>HOURS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_directors}</span><br><b>DIRECTORS</b></div><div style='display: inline-block; margin-right: 50px;'><span style='font-size: 36px;'>{distinct_countries}</span><br><b>COUNTRIES</b></div><div style='display: inline-block;'><span style='font-size: 36px;'>{distinct_languages}</span><br><b>LANGUAGES</b></div></div>",
+        unsafe_allow_html=True
+    )
 
     # Display top genres bar graph
     genre_counts = count_genre_entries(username) #dictionary of the form {Genre1:count1, Genre2:count2...}
@@ -345,7 +348,7 @@ if username:
         sorted_genre_counts,
         x=[genre[0] for genre in sorted_genre_counts],
         y=[count[1] for count in sorted_genre_counts],
-        title="<b>Top Genres</b>",
+        title="<b>GENRES</b>",
         labels={"x": "Genre", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts),
         template="plotly_white"
@@ -358,22 +361,6 @@ if username:
         paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
     )
     
-    # Create a line graph for genre counts (optional, assuming you want to visualize trends over time)
-    # You might need to provide a time dimension (e.g., year) if available in your data.
-    
-    # Create a pie chart for genre distribution
-    fig_pie = px.pie(
-        values=[count[1] for count in sorted_genre_counts],
-        names=[genre[0] for genre in sorted_genre_counts],
-        title="Genre Distribution",
-        template="plotly_white"
-    )
-    fig_pie.update_layout(legend_title="Genres", legend_y=0.9)
-    fig_pie.update_traces(textinfo='percent+label', textposition='inside')
-    
-    # Display the charts
-    st.plotly_chart(fig_bar, use_container_width=True)
-    st.plotly_chart(fig_pie, use_container_width=True)
     
     
     
