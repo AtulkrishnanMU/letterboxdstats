@@ -377,8 +377,7 @@ if username:
     fig_line = px.line(
         x=years,
         y=movie_counts,
-        title="<b>Movie Counts by Year</b>",
-        labels={"x": "Year", "y": "Movie Count"},
+        labels={"x": "YEARS", "y": "Movie Count"},
         color_discrete_sequence=["#0083b8"],
         template="plotly_white"
     )
