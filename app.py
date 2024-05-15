@@ -409,14 +409,17 @@ if username:
 
     sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
+    # Sort the genre counts in reverse order
+    sorted_genre_counts_reverse = sorted_genre_counts[::-1]
+    
     # Create a bar graph for top genres
     fig_bar = px.bar(
-        sorted_genre_counts,
-        y=[genre[0] for genre in sorted_genre_counts],
-        x=[count[1] for count in sorted_genre_counts],
+        sorted_genre_counts_reverse,
+        y=[genre[0] for genre in sorted_genre_counts_reverse],
+        x=[count[1] for count in sorted_genre_counts_reverse],
         orientation="h",
         labels={"x": "GENRES", "y": "Count"},
-        color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts),
+        color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts_reverse),
         template="plotly_white"
     )
     fig_bar.update_layout(
