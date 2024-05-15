@@ -502,17 +502,9 @@ if username:
     # Display the results
     if top_directors:
         st.write("Top 10 directors for user", username, ":")
-        cols = st.beta_columns(5)
         for i, (director, count) in enumerate(top_directors, start=1):
-            # Get director's photo URL
-            photo_url = get_director_photo_url(director)
-            if photo_url:
-                # Create caption with director's name and number of movies
-                caption = f"{director} - {count} movies"
-                # Display director's name and photo with a specific width
-                cols[i % 5].image(photo_url, caption=caption, width=100)
-            else:
-                pass
+            # Display director's name and number of movies
+            cols[i % 5].write(f"{director} - {count} movies")
     else:
         st.write("No data found for the given username.")
         
