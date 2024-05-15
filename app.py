@@ -198,7 +198,7 @@ def fetch_movie_details(username, movie_titles, stop_flag, data_collection_text)
 
             # Assuming you have defined progress_bar elsewhere
             progress_bar.progress((i + 1) / total_films)
-            data_collection_text.text(f"Collecting your data {((i + 1) / total_films)*100}%")
+            data_collection_text.text(f"Collecting your data {round(((i + 1) / total_films) * 100, 2)}%")
 
             c.execute("INSERT INTO movies (username, year, title, director, country, language, runtime, genre, cast) VALUES (?,?,?,?,?,?,?,?,?)",
                       (username, year, title, director, country, language, runtime, genre, cast))
