@@ -414,6 +414,7 @@ if username:
         sorted_genre_counts,
         x=[genre[0] for genre in sorted_genre_counts],
         y=[count[1] for count in sorted_genre_counts],
+        orientation="h",
         labels={"x": "GENRES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts),
         template="plotly_white"
@@ -434,6 +435,7 @@ if username:
         sorted_country_counts,
         x=[country[0] for country in sorted_country_counts],
         y=[count[1] for count in sorted_country_counts],
+        orientation="h",
         labels={"x": "COUNTRIES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_country_counts),
         template="plotly_white"
@@ -458,6 +460,7 @@ if username:
         sorted_language_counts,
         x=[language[0] for language in sorted_language_counts],
         y=[count[1] for count in sorted_language_counts],
+        orientation="h",
         labels={"x": "LANGUAGES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_language_counts),
         template="plotly_white"
