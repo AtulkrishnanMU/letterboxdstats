@@ -357,6 +357,27 @@ def get_top_directors(username):
     top_directors = c.fetchall()
     return top_directors
 
+def get_top_cast():
+    # Query to get the top 10 cast members based on their frequency in the entire table
+    query = '''
+        SELECT cast_member, COUNT(*) as cast_count
+        FROM (
+            SELECT trim(cast_member) as cast_member
+            FROM movies
+            JOIN (
+                SELECT trim(cast) as cast FROM movies
+            ) as c
+            ON ',' || c.cast || ',' LIKE '%,' || movies.cast || ',%'
+        )
+        GROUP BY cast_member
+        ORDER BY cast_count DESC
+        LIMIT 10
+    '''
+    # Execute the query
+    c.execute(query)
+    top_cast = c.fetchall()
+    return top_cast
+
 # User input for username
 username = st.text_input("Enter your Letterboxd username:")
 
@@ -509,6 +530,18 @@ if username:
                 cols[i % 5].write(f"{director} - {count} movies")
     else:
         st.write("No data found for the given username.")
+
+    # Get top 10 cast members based on their frequency
+    top_cast = get_top_cast()
+
+    # Display the results
+    if top_cast:
+        st.markdown(f"<h3 style='text-align: center;'>ACTORS</h3>", unsafe_allow_html=True)
+        cols = st.columns(5)
+        for i, (cast_member, count) in enumerate(top_cast, start=1):
+            cols[i % 5].write(f"{i}. {cast_member} - {count} movies")
+    else:
+        print("No data found.")
         
     
 
