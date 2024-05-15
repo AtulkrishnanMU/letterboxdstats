@@ -408,7 +408,7 @@ if username:
         sorted_language_counts,
         x=[language[0] for language in sorted_language_counts],
         y=[count[1] for count in sorted_language_counts],
-        labels={"x": "languages", "y": "Count"},
+        labels={"x": "LANGUAGES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_language_counts),
         template="plotly_white"
     )
