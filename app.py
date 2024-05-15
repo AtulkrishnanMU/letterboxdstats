@@ -418,7 +418,7 @@ if username:
         y=[genre[0] for genre in sorted_genre_counts_reverse],
         x=[count[1] for count in sorted_genre_counts_reverse],
         orientation="h",
-        labels={"x": "GENRES", "y": "Count"},
+        labels={"x": "GENRES", "y": ""},
         color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts_reverse),
         template="plotly_white"
     )
@@ -433,14 +433,16 @@ if username:
     # Display the charts
     st.plotly_chart(fig_bar, use_container_width=True)
 
-    # Create a bar graph for top Countries
+    sorted_country_counts_reverse = sorted_country_counts[::-1]
+    
+    # Create a bar graph for top countries
     fig_bar = px.bar(
-        sorted_country_counts,
-        y=[country[0] for country in sorted_country_counts],
-        x=[count[1] for count in sorted_country_counts],
+        sorted_country_counts_reverse,
+        y=[country[0] for country in sorted_country_counts_reverse],
+        x=[count[1] for count in sorted_country_counts_reverse],
         orientation="h",
-        labels={"x": "COUNTRIES", "y": "Count"},
-        color_discrete_sequence=["#0083B8"]*len(sorted_country_counts),
+        labels={"x": "COUNTRIES", "y": ""},
+        color_discrete_sequence=["#0083B8"]*len(sorted_country_counts_reverse),
         template="plotly_white"
     )
     fig_bar.update_layout(
@@ -458,14 +460,16 @@ if username:
 
     sorted_language_counts = sorted(language_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
+    sorted_language_counts_reverse = sorted_language_counts[::-1]
+    
     # Create a bar graph for top languages
     fig_bar = px.bar(
-        sorted_language_counts,
-        y=[language[0] for language in sorted_language_counts],
-        x=[count[1] for count in sorted_language_counts],
+        sorted_language_counts_reverse,
+        y=[language[0] for language in sorted_language_counts_reverse],
+        x=[count[1] for count in sorted_language_counts_reverse],
         orientation="h",
-        labels={"x": "LANGUAGES", "y": "Count"},
-        color_discrete_sequence=["#0083B8"]*len(sorted_language_counts),
+        labels={"x": "LANGUAGES", "y": ""},
+        color_discrete_sequence=["#0083B8"]*len(sorted_language_counts_reverse),
         template="plotly_white"
     )
     fig_bar.update_layout(
