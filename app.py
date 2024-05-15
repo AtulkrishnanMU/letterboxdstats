@@ -314,11 +314,6 @@ def create_bar_chart(data, x_label, y_label):
         paper_bgcolor='rgba(0, 0, 0, 0)'
     )
 
-    # Display the data
-    st.write("Data:")
-    st.write(sorted_data)
-    st.write("\n")
-    
     return fig
 
 # User input for username
