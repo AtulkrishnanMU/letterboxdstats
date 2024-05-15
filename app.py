@@ -399,7 +399,7 @@ if username:
     # Display the charts
     st.plotly_chart(fig_bar, use_container_width=True)
         
-        language_counts = get_top_languages(username) #dictionary of the fomr {language1:count1, language2:count2...}
+    language_counts = get_top_languages(username) #dictionary of the fomr {language1:count1, language2:count2...}
 
     sorted_language_counts = sorted(language_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
