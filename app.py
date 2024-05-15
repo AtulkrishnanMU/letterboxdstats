@@ -300,8 +300,8 @@ def create_bar_chart(data, x_label, y_label):
     
     fig = px.bar(
         df_sorted,
-        y=y_label,
-        x=x_label,
+        x=y_label,
+        y=x_label,
         orientation="h",
         labels={"x": x_label, "y": y_label},
         color_discrete_sequence=["#0083B8"]*len(df_sorted),
