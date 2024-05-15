@@ -358,6 +358,11 @@ def get_top_directors(username):
     return top_directors
 
 def get_top_cast():
+
+    # Connect to SQLite database
+    conn = sqlite3.connect('movies.db')
+    c = conn.cursor()
+    
     # Query to get the top 10 cast members based on their frequency in the entire table
     query = '''
         SELECT cast_member, COUNT(*) as cast_count
