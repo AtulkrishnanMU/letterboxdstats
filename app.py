@@ -385,11 +385,12 @@ if username:
 
     progress_bar.progress(100)
 
-    if stop_flag:
-      c.execute("SELECT COUNT(*) FROM movies WHERE username = ?", (username,))
-      entry_count = c.fetchone()[0]
-      data_collection_text.text(f"{entry_count} movies imported till now")
-      #st.script("document.querySelector('#stop_button').disabled = true;")
+    c.execute("SELECT COUNT(*) FROM movies WHERE username = ?", (username,))
+    entry_count = c.fetchone()[0]
+    data_collection_text.text(f"{entry_count} movies imported till now")
+    #st.script("document.querySelector('#stop_button').disabled = true;")
+
+    data_collection_text.text(f"{entry_count} movies imported till now")
 
     # Get top categories
     total_hours, distinct_directors, distinct_countries, distinct_languages = get_movie_statistics(username)
