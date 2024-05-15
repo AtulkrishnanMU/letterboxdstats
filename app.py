@@ -367,19 +367,16 @@ def get_top_cast():
     query = '''
     SELECT cast_member, COUNT(*) as cast_count
     FROM (
-        SELECT trim(value) as cast_member
-        FROM movies
-        JOIN (
-            SELECT movie_id, GROUP_CONCAT(trim(cast), ',') as cast_list
-            FROM movies
-            GROUP BY movie_id
+        SELECT trim(cast_member) as cast_member
+        FROM (
+            SELECT trim(cast) as cast FROM movies
         ) as c
-        ON ',' || c.cast_list || ',' LIKE '%,' || movies.cast || ','
-        CROSS JOIN unnest(split(cast_list, ',')) as t(value)
+        JOIN movies
+        ON ',' || c.cast || ',' LIKE '%,' || movies.cast || ',%'
     )
     GROUP BY cast_member
     ORDER BY cast_count DESC
-    LIMIT 10;
+    LIMIT 10
     '''
     # Execute the query
     c.execute(query)
