@@ -384,7 +384,12 @@ if username:
     )
     fig_line.update_layout(
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(tickmode="linear"),
+        xaxis=dict(
+            tickmode="array",
+            tickvals=[years[0], years[-1]],
+            ticktext=[years[0], years[-1]],
+            showgrid=False
+        ),
         yaxis=dict(showgrid=False)
     )
     
