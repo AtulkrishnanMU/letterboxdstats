@@ -9,6 +9,7 @@ import plotly.express as px
 import altair as alt
 
 import sqlite3
+import imdb
 from imdb import IMDb
 import matplotlib.pyplot as plt
 import numpy as np
