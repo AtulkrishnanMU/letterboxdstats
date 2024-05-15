@@ -213,12 +213,12 @@ def count_genre_entries(username):
 
     return genre_counts
 
-def get_top_countries():
+def get_top_countries(username):
     conn = sqlite3.connect('movies.db')
     # Connect to SQLite database
     c = conn.cursor()
     # Fetch top 9 countries by count
-    c.execute("SELECT country, COUNT(*) as count FROM movies GROUP BY country ORDER BY count DESC LIMIT 9")
+    c.execute("SELECT country, COUNT(*) as count FROM movies WHERE username = ? GROUP BY country ORDER BY count DESC LIMIT 9", (username,))
     top_countries = c.fetchall()
 
     # Close the connection
@@ -339,7 +339,7 @@ if username:
 
     sorted_genre_counts = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
-    country_counts = get_top_countries() #dictionary of the fomr {Country1:count1, Country2:count2...}
+    country_counts = get_top_countries(username) #dictionary of the fomr {Country1:count1, Country2:count2...}
 
     sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
@@ -350,6 +350,26 @@ if username:
         y=[count[1] for count in sorted_genre_counts],
         labels={"x": "GENRES", "y": "Count"},
         color_discrete_sequence=["#0083B8"]*len(sorted_genre_counts),
+        template="plotly_white"
+    )
+    fig_bar.update_layout(
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="black"),
+        xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
+        yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
+        paper_bgcolor='rgba(0, 0, 0, 0)'  # Set paper background color to transparent
+    )
+    
+    # Display the charts
+    st.plotly_chart(fig_bar, use_container_width=True)
+
+    # Create a bar graph for top Countries
+    fig_bar = px.bar(
+        sorted_country_counts,
+        x=[country[0] for country in sorted_country_counts],
+        y=[count[1] for count in sorted_country_counts],
+        labels={"x": "Countries", "y": "Count"},
+        color_discrete_sequence=["#0083B8"]*len(sorted_country_counts),
         template="plotly_white"
     )
     fig_bar.update_layout(
