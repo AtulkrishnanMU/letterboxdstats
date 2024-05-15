@@ -362,6 +362,8 @@ if username:
         xaxis=dict(showgrid=True, gridcolor='#cecdcd'),
     )
 
+    fig_genre.show() 
+
 
 
 
