@@ -451,8 +451,8 @@ if username:
         xaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show x-axis grid and set its color  
         yaxis=dict(showgrid=True, gridcolor='#cecdcd'),  # Show y-axis grid and set its color  
         paper_bgcolor='rgba(0, 0, 0, 0)',  # Set paper background color to transparent
-        height=600,  # Adjust height as needed
-        width=1500 
+        height=1,  # Adjust height as needed
+        width=1 
     )
     
     # Display the charts
