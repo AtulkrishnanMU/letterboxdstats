@@ -409,8 +409,16 @@ if username:
 
     sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
+    language_counts = get_top_languages(username) #dictionary of the fomr {language1:count1, language2:count2...}
+
+    sorted_language_counts = sorted(language_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+
     # Sort the genre counts in reverse order
     sorted_genre_counts_reverse = sorted_genre_counts[::-1]
+
+    sorted_country_counts_reverse = sorted_country_counts[::-1]
+
+    sorted_language_counts_reverse = sorted_language_counts[::-1]
     
     # Create a bar graph for top genres
     fig_genre = px.bar(
@@ -432,8 +440,6 @@ if username:
     
     # Display the charts
     #st.plotly_chart(fig_bar, use_container_width=True)
-
-    sorted_country_counts_reverse = sorted_country_counts[::-1]
     
     # Create a bar graph for top countries
     fig_country = px.bar(
@@ -455,12 +461,6 @@ if username:
     
     # Display the charts
     #st.plotly_chart(fig_bar, use_container_width=True)
-        
-    language_counts = get_top_languages(username) #dictionary of the fomr {language1:count1, language2:count2...}
-
-    sorted_language_counts = sorted(language_counts.items(), key=lambda x: x[1], reverse=True)[:10]
-
-    sorted_language_counts_reverse = sorted_language_counts[::-1]
     
     # Create a bar graph for top languages
     fig_language = px.bar(
