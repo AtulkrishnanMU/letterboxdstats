@@ -36,13 +36,19 @@ def get_year_movie_count(username):
     conn = sqlite3.connect('movies.db')
     c = conn.cursor()
 
-    # Retrieve the year and count of movies for each year for the specified username
-    c.execute("SELECT strftime('%Y', release_date) AS year, COUNT(*) AS num_movies FROM movies WHERE username = ? GROUP BY year", (username,))
-    year_movie_count = dict(c.fetchall())
+    # Query to get count of movies by year for a specific username
+    c.execute('''SELECT year, COUNT(*) as num_movies FROM movies WHERE username = ? GROUP BY year''', (username,))
+    rows = c.fetchall()
+
+    # Create dictionary to store results
+    movie_count_by_year = {}
+    for row in rows:
+        year = row[0]
+        num_movies = row[1]
+        movie_count_by_year[year] = num_movies
 
     conn.close()
-
-    return year_movie_count
+    return movie_count_by_year
 
 def get_user_stats(username):
     conn = sqlite3.connect('movies.db')
