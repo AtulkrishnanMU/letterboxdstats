@@ -281,15 +281,15 @@ if username:
             img_circle = mask_to_circle(img_resized)
 
             # Display the circular image in the first column
-            with col1:
-                st.image(img_circle, width=150)
+            #with col1:
+            st.image(img_circle, width=150)
 
             # Display the bio in the second column
-            with col2:
-                st.markdown(f"**{first_sentence}**")
-                st.write(f"Films watched: **{films_watched}**")
-                #if bio_text !="":
-                    #st.write(f"Bio: {bio_text}")
+            #with col2:
+            st.markdown(f"**{first_sentence}**")
+            st.write(f"Films watched: **{films_watched}**")
+            #if bio_text !="":
+            #st.write(f"Bio: {bio_text}")
             
         except Exception as e:
             st.error(str(e))
