@@ -340,7 +340,8 @@ if username:
 
     sorted_country_counts = sorted(country_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
-
+    genre_names = [item[0] for item in sorted_genre_counts]
+    genre_counts = [item[1] for item in sorted_genre_counts]
 
     fig_genre = px.bar(
         x=genre_counts,
