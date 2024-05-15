@@ -320,6 +320,21 @@ def create_bar_chart(data, x_label, y_label):
 
     return fig
 
+def get_top_directors(username):
+    # Query to get the top 10 directors based on their frequency for a given username
+    query = f'''
+        SELECT director, COUNT(*) as director_count
+        FROM movies
+        WHERE username = ?
+        GROUP BY director
+        ORDER BY director_count DESC
+        LIMIT 10
+    '''
+    # Execute the query
+    c.execute(query, (username,))
+    top_directors = c.fetchall()
+    return top_directors
+
 # User input for username
 username = st.text_input("Enter your Letterboxd username:")
 
@@ -457,6 +472,25 @@ if username:
     left.plotly_chart(fig_country, use_container_width=True)
     right.plotly_chart(fig_language, use_container_width=True)
     center.plotly_chart(fig_genre, use_container_width=True)
+
+
+    # Get top 10 directors based on their frequency
+    top_directors = get_top_directors(username)
+
+    # Display the results
+    if top_directors:
+        st.write("Top 10 directors for user", username, ":")
+        for i, (director, count) in enumerate(top_directors, start=1):
+            # Get director's photo URL
+            photo_url = get_director_photo_url(director)
+            if photo_url:
+                # Display director's name and photo
+                st.write(f"{i}. {director} - {count} movies")
+                st.image(photo_url, caption=director, use_column_width=True)
+            else:
+                st.write(f"{i}. {director} - {count} movies (No photo available)")
+    else:
+        st.write("No data found for the given username.")
         
     
 
