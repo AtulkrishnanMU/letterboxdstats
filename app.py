@@ -157,7 +157,7 @@ def extract_all_movies(username):
     
     return all_movies
 
-def fetch_movie_details(username, movie_titles, stop_flag=0):
+def fetch_movie_details(username, movie_titles, stop_flag=0, data_collection_text):
     ia = IMDb()
 
     conn = sqlite3.connect('movies.db')
@@ -198,6 +198,7 @@ def fetch_movie_details(username, movie_titles, stop_flag=0):
 
             # Assuming you have defined progress_bar elsewhere
             progress_bar.progress((i + 1) / total_films)
+            data_collection_text.text(f"Collecting your data {((i + 1) / total_films)*100}%")
 
             c.execute("INSERT INTO movies (username, year, title, director, country, language, runtime, genre, cast) VALUES (?,?,?,?,?,?,?,?,?)",
                       (username, year, title, director, country, language, runtime, genre, cast))
@@ -370,6 +371,8 @@ if username:
     
     #st.write(bio)
 
+    data_collection_text = st.text("Collecting your data")
+
     all_movies = extract_all_movies(username)
 
     # List of movie titles
@@ -379,14 +382,14 @@ if username:
 
     stop_flag = st.button("Stop for now")
 
-    fetch_movie_details(username, movie_titles, stop_flag)
+    fetch_movie_details(username, movie_titles, stop_flag, data_collection_text)
 
     progress_bar.progress(100)
 
     if stop_flag:
       c.execute("SELECT COUNT(*) FROM movies WHERE username = ?", (username,))
       entry_count = c.fetchone()[0]
-      st.text(f"{entry_count} movies imported now")
+      data_collection_text.text(f"{entry_count} movies imported now")
       #st.script("document.querySelector('#stop_button').disabled = true;")
 
     # Get top categories
