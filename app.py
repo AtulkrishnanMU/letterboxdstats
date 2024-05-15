@@ -501,7 +501,7 @@ if username:
 
     # Display the results
     if top_directors:
-        st.write("Top 10 directors for user", username, ":")
+        st.markdown(f"<h3 style='text-align: center;'>DIRECTORS</h3>", unsafe_allow_html=True)
         cols = st.columns(5)
         for i, (director, count) in enumerate(top_directors):
             # Display director's name and number of movies
