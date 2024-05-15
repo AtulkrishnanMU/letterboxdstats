@@ -431,7 +431,7 @@ if username:
     )
     
     # Display the charts
-    st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_bar)
 
     sorted_country_counts_reverse = sorted_country_counts[::-1]
     
@@ -454,7 +454,7 @@ if username:
     )
     
     # Display the charts
-    st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_bar)
         
     language_counts = get_top_languages(username) #dictionary of the fomr {language1:count1, language2:count2...}
 
@@ -481,7 +481,7 @@ if username:
     )
     
     # Display the charts
-    st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_bar)
     
     
 
