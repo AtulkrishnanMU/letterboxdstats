@@ -502,7 +502,7 @@ if username:
     # Display the results
     if top_directors:
         st.write("Top 10 directors for user", username, ":")
-        cols = st.beta_columns(5)
+        cols = st.columns(5)
         for i, (director, count) in enumerate(top_directors):
             # Display director's name and number of movies
             if director != "":
