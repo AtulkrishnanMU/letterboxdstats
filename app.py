@@ -305,8 +305,7 @@ def create_bar_chart(data, x_label, y_label):
         orientation="h",
         labels={"x": x_label, "y": y_label},
         color_discrete_sequence=["#0083B8"]*len(df_sorted),
-        template="plotly_white",
-        title=title
+        template="plotly_white"
     )
     
     fig.update_layout(
