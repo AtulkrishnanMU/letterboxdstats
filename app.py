@@ -60,6 +60,7 @@ def get_user_stats(username):
     if total_runtime_minutes:
         total_runtime_hours = total_runtime_minutes / 60
         tot_hours = f"{total_runtime_hours:.2f} hours"
+        tot_hours = round(tot_hours, 2)
     else:
         tot_hours = "No movies found for the user"
 
