@@ -1,5 +1,3 @@
-Sure! Here is the updated README file for your Streamlit app:
-
 # Letterboxd Stats 🌎
 
 ## Features
