@@ -4,6 +4,14 @@ import sqlite3
 import time
 from functions import collect_and_save_user_movies, create_and_populate_db
 
+import os
+import requests
+
+# Access the token from environment variables
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+REPO_NAME = "AtulkrishnanMU/letterboxdstats"
+FILE_PATH = "movies.db"
+
 # Title and description
 st.title("Letterboxd User Stats")
 st.write("Enter your Letterboxd username to view statistics about your movie-watching habits.")
@@ -90,5 +98,41 @@ if username:
     most_watched_countries = get_most_watched("country")
     st.bar_chart(most_watched_countries.set_index("category"))
 
+    # Save changes to GitHub
+    def upload_to_github(file_path, repo, token, commit_message="Update movies database"):
+        url = f"https://api.github.com/repos/{repo}/contents/{file_path}"
+        
+        # Read the file and encode in base64 for GitHub API
+        with open(db_name, "rb") as file:
+            content = file.read()
+            encoded_content = content.encode("base64")
+
+        # Check if the file already exists to get the SHA
+        response = requests.get(url, headers={"Authorization": f"token {token}"})
+        if response.status_code == 200:
+            sha = response.json().get("sha")
+        else:
+            sha = None  # File does not exist yet
+
+        # Prepare payload
+        data = {
+            "message": commit_message,
+            "content": encoded_content,
+            "branch": "main",  # Adjust if using a different branch
+        }
+        if sha:
+            data["sha"] = sha
+
+        # Upload to GitHub
+        response = requests.put(url, json=data, headers={"Authorization": f"token {token}"})
+        if response.status_code == 201 or response.status_code == 200:
+            st.write("Database successfully updated on GitHub.")
+        else:
+            st.write("Failed to update database on GitHub.")
+            st.write(response.json())
+
+    # Call the function to upload to GitHub
+    upload_to_github(FILE_PATH, REPO_NAME, GITHUB_TOKEN)
+    
     # Close database connection
     conn.close()
