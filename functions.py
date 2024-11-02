@@ -47,13 +47,6 @@ def convert_rating_to_integer(rating: str) -> int:
         return 10
     return 0  # Default return if nothing matches
 
-
-def convert_rating_to_integer(rating_text):
-    try:
-        return int(rating_text.strip())
-    except (ValueError, TypeError):
-        return None
-
 def collect_and_save_user_movies(username):
     # CSV file path
     csv_file = 'user.csv'
