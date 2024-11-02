@@ -13,6 +13,7 @@ username = st.text_input("Enter your Letterboxd username:", "")
 
 # Run only when username is entered
 if username:
+    st.write("Collecting your data...")
     # File paths
     ratings_file = 'user.csv'
     db_name = 'movies.db'
