@@ -14,6 +14,7 @@ from imdb import IMDb
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from functions import collect_and_save_user_movies, create_and_populate_db
 
 # Create an instance of the IMDb class
 ia = imdb.IMDb()
