@@ -13,7 +13,7 @@ REPO_NAME = "AtulkrishnanMU/letterboxdstats"
 FILE_PATH = "movies.db"
 
 # Title and description
-st.markdown("Letterboxd Stats")
+st.title("Letterboxd Stats")
 #st.title("[Letterboxd User Stats]")
 # Add GitHub profile promotion
 st.markdown(
