@@ -15,7 +15,7 @@ FILE_PATH = "movies.db"
 # Title and logo
 col1, col2 = st.columns([1, 6])  # Create two columns
 with col1:
-    st.image("https://static.wikia.nocookie.net/film-and-television/images/a/a0/Unnamed.png/revision/latest?cb=20221129103323", width=30)  # Logo with a specified width
+    st.image("https://a.ltrbxd.com/logos/letterboxd-logo-alt-v-neg-rgb-1000px.png", width=30)  # Logo with a specified width
 
 with col2:
     st.title("Letterboxd User Stats")
