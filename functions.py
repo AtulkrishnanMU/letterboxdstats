@@ -157,7 +157,7 @@ def get_movie_details(movie_name):
         return None
 
 # Function to create and populate the SQLite database
-def create_and_populate_db(ratings_file, username, db_name='movies.db'):
+def create_and_populate_db(ratings_file, username, db_name='movies.db', progress_callback=None):
     # Read CSV file
     ratings_df = pd.read_csv(ratings_file)
 
@@ -165,35 +165,28 @@ def create_and_populate_db(ratings_file, username, db_name='movies.db'):
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
+    total_movies = len(ratings_df)  # Total movies to process
+    processed_movies = 0            # Track processed movies count
+
     # Iterate through the ratings dataframe and insert/update data into the database
     for index, row in ratings_df.iterrows():
-        #try:
         username = row['Username']
         movie_name = row['Movie Name']
         rating = row['Rating']  # Assuming rating scaling is still needed
 
         # Check if the movie already exists in the movie_details table
-        cursor.execute('SELECT 1 FROM movie_details WHERE movie_name = ?',
-                        (movie_name,))
+        cursor.execute('SELECT 1 FROM movie_details WHERE movie_name = ?', (movie_name,))
         movie_exists = cursor.fetchone()
 
         if not movie_exists:
-            # Get movie details from IMDb using the movie name
             details = get_movie_details(movie_name)
 
             if details:
-
-                # Retrieve and adjust the genres
-                g = details['genres'] + [''] * (5 - len(details['genres'])) if details['genres'] else [''] * 5
-                g = adjust_list(g)
-
-                d = details['director'].split(',')
-                d = adjust_list(d)
-
+                g = adjust_list(details['genres'])
+                d = adjust_list(details['director'].split(','))
                 l = details['language'].split(',')
                 c = details['country'].split(',')
 
-                # Insert movie details into movie_details table
                 cursor.execute('''INSERT INTO movie_details (movie_name, year, director1, director2, cast1, cast2, cast3, cast4, cast5,
                                 duration, country, genre1, genre2, genre3, genre4, genre5, language)
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
@@ -201,11 +194,6 @@ def create_and_populate_db(ratings_file, username, db_name='movies.db'):
                                 details['cast'][2], details['cast'][3], details['cast'][4], details['duration'],
                                 c[0], g[0], g[1], g[2], g[3], g[4], l[0]))
 
-                # Print details of the newly inserted movie
-                try:
-                    print(f"Inserted into movie_details: {movie_name} ({details['year']})")
-                except:
-                    print('')
                 conn.commit()
 
         # Check if a record with the same username and movie_name exists in the users table
@@ -215,25 +203,18 @@ def create_and_populate_db(ratings_file, username, db_name='movies.db'):
 
         if user_record:
             existing_rating = user_record[0]
-
-            # If the record exists but the rating is different, update the rating
             if existing_rating != rating:
                 cursor.execute('''UPDATE users SET rating = ? WHERE username = ? AND movie_name = ?''',
                                 (rating, username, movie_name))
-                try:
-                    print(f"Updated rating for {username}, {movie_name} from {existing_rating} to {rating}")
-                except:
-                    print('')
         else:
-            # If no record exists, insert the new data
             cursor.execute('''INSERT INTO users (username, movie_name, rating)
                                 VALUES (?, ?, ?)''', (username, movie_name, rating))
-            try:
-                print(f"Inserted into users: {username}, {movie_name}, Rating: {rating}")
-            except:
-                print('..')
-            print('-' * 50)
-            
+
         conn.commit()
+
+        # Update progress after processing each movie
+        processed_movies += 1
+        if progress_callback:
+            progress_callback(processed_movies, total_movies)
 
     conn.close()
