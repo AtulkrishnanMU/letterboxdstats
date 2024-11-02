@@ -180,7 +180,7 @@ def create_and_populate_db(ratings_file, username, db_name='movies.db', progress
         movie_exists = cursor.fetchone()
 
         if not movie_exists:
-            print(f'{movie_name} doesn't exist in db')
+            print(f"{movie_name} doesn't exist in db")
             details = get_movie_details(movie_name)
 
             if details:
