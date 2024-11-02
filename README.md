@@ -5,7 +5,7 @@
 - Scrapes movie details from Letterboxd based on your username
 - Provides statistics such as total hours watched, distinct directors, countries, and languages
 - Displays movie count by year in a line graph
-- Shows top languages, countries, and genres in bar charts
+- Shows top languages, countries, and genres
 - Lists top directors with the number of movies watched
 - Dynamic data collection with progress updates
 
