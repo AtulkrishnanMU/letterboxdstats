@@ -109,7 +109,7 @@ def collect_and_save_user_movies(username):
             if movie not in existing_entries:
                 writer.writerow(movie)
 
-    print(f'Movie data for {username} has been saved to {csv_file}.')
+    #print(f'Movie data for {username} has been saved to {csv_file}.')
 
 
 def adjust_list(input_list):
@@ -153,7 +153,7 @@ def get_movie_details(movie_name):
         else:
             return None  # If movie not found
     except Exception as e:
-        print(f"Error retrieving movie details for {movie_name}: {e}")
+        #print(f"Error retrieving movie details for {movie_name}: {e}")
         return None
 
 # Function to create and populate the SQLite database
@@ -173,14 +173,14 @@ def create_and_populate_db(ratings_file, username, db_name='movies.db', progress
         username = row['Username']
         movie_name = row['Movie Name']
         rating = row['Rating']  # Assuming rating scaling is still needed
-        print(f'{movie_name} {rating}')
+        #print(f'{movie_name} {rating}')
 
         # Check if the movie already exists in the movie_details table
         cursor.execute('SELECT 1 FROM movie_details WHERE movie_name = ?', (movie_name,))
         movie_exists = cursor.fetchone()
 
         if not movie_exists:
-            print(f"{movie_name} doesn't exist in db")
+            #print(f"{movie_name} doesn't exist in db")
             details = get_movie_details(movie_name)
 
             if details:
