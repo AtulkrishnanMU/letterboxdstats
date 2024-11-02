@@ -104,8 +104,7 @@ if username:
         
         # Read the file and encode in base64 for GitHub API
         with open(db_name, "rb") as file:
-            content = file.read()
-            encoded_content = content.encode("base64")
+            content = base64.b64encode(file.read()).decode("utf-8")
 
         # Check if the file already exists to get the SHA
         response = requests.get(url, headers={"Authorization": f"token {token}"})
@@ -117,8 +116,8 @@ if username:
         # Prepare payload
         data = {
             "message": commit_message,
-            "content": encoded_content,
-            "branch": "main",  # Adjust if using a different branch
+            "content": content,
+            "branch": "main",
         }
         if sha:
             data["sha"] = sha
