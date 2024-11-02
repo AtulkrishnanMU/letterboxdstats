@@ -14,6 +14,10 @@ FILE_PATH = "movies.db"
 
 # Title and description
 st.title("Letterboxd User Stats")
+# Add GitHub profile promotion
+st.markdown(
+    "👤 Created by: [AtulkrishnanMU](https://github.com/AtulkrishnanMU)")
+
 st.write("Enter your Letterboxd username to view statistics about your movie-watching habits.")
 
 # Get username input
