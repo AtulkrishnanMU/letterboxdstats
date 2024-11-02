@@ -12,10 +12,14 @@ GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 REPO_NAME = "AtulkrishnanMU/letterboxdstats"
 FILE_PATH = "movies.db"
 
-# Title and description
-st.title("Letterboxd Stats")
-#st.title("[Letterboxd User Stats]")
-# Add GitHub profile promotion
+# Title and logo
+col1, col2 = st.columns([1, 6])  # Create two columns
+with col1:
+    st.image("https://static.wikia.nocookie.net/film-and-television/images/a/a0/Unnamed.png/revision/latest?cb=20221129103323", width=50)  # Logo with a specified width
+
+with col2:
+    st.title("Letterboxd User Stats")
+
 st.markdown(
     "👤 Created by: [AtulkrishnanMU](https://github.com/AtulkrishnanMU)")
 
