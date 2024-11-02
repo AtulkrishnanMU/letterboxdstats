@@ -71,21 +71,24 @@ if username:
     # Helper function to get most-watched attributes
     def get_most_watched(column_name):
         query = f"""
-            SELECT {column_name}, COUNT(*) AS count FROM movie_details 
+            SELECT {column_name} AS category, COUNT(*) AS count FROM movie_details 
             WHERE movie_name IN (SELECT movie_name FROM users WHERE username = ?)
             GROUP BY {column_name} ORDER BY count DESC LIMIT 5
         """
         return pd.read_sql_query(query, conn, params=(username,))
 
-    # Display additional stats
+    # Display additional stats as bar charts
     st.write("**Most Watched Genres:**")
-    st.dataframe(get_most_watched("genre1"))
+    most_watched_genres = get_most_watched("genre1")
+    st.bar_chart(most_watched_genres.set_index("category"))
 
     st.write("**Most Watched Languages:**")
-    st.dataframe(get_most_watched("language"))
+    most_watched_languages = get_most_watched("language")
+    st.bar_chart(most_watched_languages.set_index("category"))
 
     st.write("**Most Watched Countries:**")
-    st.dataframe(get_most_watched("country"))
+    most_watched_countries = get_most_watched("country")
+    st.bar_chart(most_watched_countries.set_index("category"))
 
     # Close database connection
     conn.close()
