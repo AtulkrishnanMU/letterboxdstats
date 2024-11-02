@@ -47,65 +47,76 @@ def convert_rating_to_integer(rating: str) -> int:
         return 10
     return 0  # Default return if nothing matches
 
-def insert_csv(i):
-    # Assuming 'link' contains the URL to scrape
-    link = f'https://letterboxd.com/{i}/films/by/date/'
 
-    # Extract the username from the link
-    username = d[i]
+def convert_rating_to_integer(rating_text):
+    try:
+        return int(rating_text.strip())
+    except (ValueError, TypeError):
+        return None
 
-    # Fetch the page content
-    response = requests.get(link)
-    soup = BeautifulSoup(response.text, 'html.parser')
+def collect_and_save_user_movies(username):
+    # CSV file path
+    csv_file = 'user.csv'
+    
+    # Helper function to extract movies from a given page URL
+    def extract_movies(url):
+        film_data = []
+        response = requests.get(url)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        movie_containers = soup.find_all('li', class_='poster-container')
 
-    # List to store movie details
-    movies = []
-
-    # Find all the movie items
-    movie_items = soup.select('ul.poster-list li.poster-container')[:30]  # Limit to the first 30
-
-    for movie in movie_items:
-        # Get the movie name from the alt attribute of the image tag
-        movie_name = movie.find('img').get('alt')
+        for container in movie_containers:
+            # Movie name
+            movie_name = container.find('img').get('alt') if container.find('img') else "Unknown"
+            
+            # Year and rating
+            year_span = container.find('span', class_='year')
+            year = year_span.text if year_span else "Unknown"
+            rating_span = container.select_one('p.poster-viewingdata .rating')
+            rating = convert_rating_to_integer(rating_span.text) if rating_span else None
+            
+            # Append movie data
+            film_data.append((username, movie_name, year, rating))
         
-        # Attempt to find the rating span; if not found, assign 'No rating'
-        rating_span = movie.select_one('p.poster-viewingdata .rating')
-        rating = convert_rating_to_integer(rating_span.text if rating_span else 'No rating')
+        return film_data
 
-        if rating == 0:
-            rating = None
-        
-        # Append movie details to the list
-        movies.append((username, movie_name, rating))
+    # Base URL for user movies
+    base_url = f"https://letterboxd.com/{username}/films/by/date-earliest/"
+    all_movies = []
+    page_num = 1
 
-    # Specify the CSV file name based on the username
-    csv_file = f'D:\moviebot\csv files\user.csv'
+    # Loop through paginated movie lists until no more movies are found
+    while True:
+        url = f"{base_url}page/{page_num}/"
+        movies = extract_movies(url)
+        if not movies:
+            break
+        all_movies.extend(movies)
+        page_num += 1
 
-    # Create a set to store existing entries for uniqueness
+    # Check existing entries in CSV to avoid duplicates
     existing_entries = set()
-
-    # Read existing entries from the user's CSV file if it exists
     if os.path.exists(csv_file):
         with open(csv_file, mode='r', encoding='utf-8') as file:
             reader = csv.reader(file)
-            # Skip the header row
-            next(reader)
-            # Populate the set with existing entries
+            next(reader)  # Skip header
             for row in reader:
-                existing_entries.add((row[0], row[1], row[2]))
+                existing_entries.add((row[0], row[1], row[2], row[3]))
 
-    # Open the CSV file in append mode
-    with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
+    # Write new entries to CSV
+    with open(csv_file, mode='a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         
-        # Write the header if the file is new
-        if file.tell() == 0:  # Check if the file is empty
-            writer.writerow(['Username', 'Movie Name', 'Rating'])
-        
-        # Write the movie data only if it does not exist
-        for movie in movies:
+        # Write header if the file is new
+        if os.path.getsize(csv_file) == 0:
+            writer.writerow(['Username', 'Movie Name', 'Year', 'Rating'])
+
+        # Write movie data only if it does not exist
+        for movie in all_movies:
             if movie not in existing_entries:
                 writer.writerow(movie)
+
+    print(f'Movie data for {username} has been saved to {csv_file}.')
 
 
 def adjust_list(input_list):
