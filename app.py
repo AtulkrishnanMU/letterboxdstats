@@ -3,6 +3,7 @@ import pandas as pd
 import sqlite3
 import time
 from functions import collect_and_save_user_movies, create_and_populate_db
+import base64
 
 import os
 import requests
