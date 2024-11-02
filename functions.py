@@ -173,12 +173,14 @@ def create_and_populate_db(ratings_file, username, db_name='movies.db', progress
         username = row['Username']
         movie_name = row['Movie Name']
         rating = row['Rating']  # Assuming rating scaling is still needed
+        print(f'{movie_name} {rating}')
 
         # Check if the movie already exists in the movie_details table
         cursor.execute('SELECT 1 FROM movie_details WHERE movie_name = ?', (movie_name,))
         movie_exists = cursor.fetchone()
 
         if not movie_exists:
+            print(f'{movie_name} doesn't exist in db')
             details = get_movie_details(movie_name)
 
             if details:
